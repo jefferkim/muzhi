@@ -1,0 +1,80 @@
+@import '../../../../base/styles/global';
+@import '../../../../base/styles/component/base/less/base';
+@import '../../../../base/styles/component/innernav/less/innernav';
+@import '../../../../base/styles/component/pagenav/less/pagenav';
+@import '../../../../base/styles/component/more/less/more';
+@import '../../../../base/styles/component/pagenav/less/pagenav';
+
+#tbh5v0{
+    a{
+        text-decoration: none;
+    }
+    #J_tab{
+        display:-webkit-box;
+        -webkit-box-pack:center;
+        padding: 8px 0;
+        li{
+            padding: 0 10px;
+            height: 23px;
+            line-height: 23px;
+            border-right: solid 1px #C9C9C9;
+            &:last-child{
+                border: none;
+            }
+            a{
+                color: #666;
+                &.cur{
+                    color: #DC442F;
+                }
+            }
+        }
+    }
+    .downlist{
+        position: relative;
+        b{
+            position: absolute;
+            left: 88px;
+            top: -10px;
+            width: 0;
+            height: 0;
+            border-width: 5px 5px;
+            border-style: solid;
+            border-color: transparent transparent #444;
+            font-size: 0;
+            line-height: 0;
+            &.center{
+                left: 172px;
+            }
+            &.right{
+                left: 255px;
+            }
+        }
+    }
+
+    .J_tab_list{
+        background-color: #444;
+        padding: 5px 0 5px 20px;
+        overflow: hidden;
+        a{
+            color: white;
+            font-size: 14px;
+            display: block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            text-align: justify;
+        }
+        li{
+            display: inline-block;
+            width: 70px;
+            line-height: 30px;
+            padding-right: 4px;
+            overflow: hidden;
+            a{
+                &.cur{
+                    color: #DC442F;
+                }
+            }
+        }
+    }
+}
