@@ -1,33 +1,32 @@
-/**
- * Author: jason_chen(chenwei)
- * Date: 12-12-11
- */
-define(function (require, exports, module) {
-    var $ = require('zepto'),
-        backbone = require('backbone'),
-        router = backbone.Router.extend({
-            initialize:function () {
-                this.dfState = this.cmState = this.itState = this.isFirst = true
-                this.parent = $('#J_main');
-                this.dfEle = $('#J_new');
-                this.hotEle = $('#J_hot');
-                this.mineEle = $('#J_mine');
-                this.loadEle = $('#J_fullload');
-                this.curELe = null;
-            },
-            routes:{
-                '':'list',
-                '!list':'list',
-                '!list/:listCode/p:page':'list', //商品列表
-                '!hot':'hot',
-                '!mine':'mine'
-            },
-            list:function (){
+//create global collection
+Muzhi.Goods = new Muzhi.goodList;
 
-            },
-            start:function (){
-                backbone.history.start();
-            }
-        });
-    module.exports = router;
+//begin router
+Muzhi.Router = Backbone.Router.extend({
+
+    routes: {
+        '': "index", //首页
+        '!list':"list" //列表
+    },
+
+    initialize: function () {
+
+       var slider =  new Swipe($('#J-slider')[0]);
+
+    },
+    //列表页
+    list: function () {
+        new Muzhi.goodlistView({
+            collection:Muzhi.Goods
+        }).render();
+
+
+
+
+    }
+
+
 });
+
+
+
