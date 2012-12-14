@@ -1,0 +1,119 @@
+{
+    "MzListPart": [
+        {
+            "mzBasePart": {
+                "status": "xx",
+                "userStatus": "xx",
+                "type": "xx",
+                "rule": "xx"
+            },
+            "mzCorePart": {
+                "maxPrice": "xx",
+                "minPrice": "xx"
+            },
+            "mzInfoPart": {
+                "startTime": "xx",
+                "desc": "xx"
+            },
+            "MzClickPart": {
+                "showName": "xx",
+                "clickType": "xx"
+            },
+            "mzExtPart": {
+                "numOfBarelySold": "xx"
+            }
+        },
+        {
+            "mzBasePart": {
+                "status": "xx",
+                "userStatus": "xx",
+                "type": "xx",
+                "rule": "xx"
+            },
+            "mzCorePart": {
+                "maxPrice": "xx",
+                "minPrice": "xx"
+            },
+            "mzInfoPart": {
+                "startTime": "xx",
+                "desc": "xx"
+            },
+            "MzClickPart": {
+                "showName": "xx",
+                "clickType": "xx"
+            },
+            "mzExtPart": {
+                "numOfBarelySold": "xx"
+            }
+        },
+        {
+            "mzBasePart": {
+                "status": "xx",
+                "userStatus": "xx",
+                "type": "xx",
+                "rule": "xx"
+            },
+            "mzCorePart": {
+                "maxPrice": "xx",
+                "minPrice": "xx"
+            },
+            "mzInfoPart": {
+                "startTime": "xx",
+                "desc": "xx"
+            },
+            "MzClickPart": {
+                "showName": "xx",
+                "clickType": "xx"
+            },
+            "mzExtPart": {
+                "numOfBarelySold": "xx"
+            }
+        },
+        {
+            "mzBasePart": {
+                "status": "xx",
+                "userStatus": "xx",
+                "type": "xx",
+                "rule": "xx"
+            },
+            "mzCorePart": {
+                "maxPrice": "xx",
+                "minPrice": "xx"
+            },
+            "mzInfoPart": {
+                "startTime": "xx",
+                "desc": "xx"
+            },
+            "MzClickPart": {
+                "showName": "xx",
+                "clickType": "xx"
+            },
+            "mzExtPart": {
+                "numOfBarelySold": "xx"
+            }
+        },
+        {
+            "mzBasePart": {
+                "status": "xx",
+                "userStatus": "xx",
+                "type": "xx",
+                "rule": "xx"
+            },
+            "mzCorePart": {
+                "maxPrice": "xx",
+                "minPrice": "xx"
+            },
+            "mzInfoPart": {
+                "startTime": "xx",
+                "desc": "xx"
+            },
+            "MzClickPart": {
+                "showName": "xx",
+                "clickType": "xx"
+            },
+            "mzExtPart": {
+                "numOfBarelySold": "xx"
+            }
+        }
+    ]
+}

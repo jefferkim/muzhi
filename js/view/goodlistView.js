@@ -6,14 +6,20 @@ Muzhi.goodlistView = Backbone.View.extend({
 
         self.startPos = 0;
         self.endPos = 10;
-        console.log(this.collection);/*
-        this.collection.fetch();
-        this.collection.on("reset",this.render);*/
+
 
     },
 
-    render: function () {
+    addItem:function(good){
+        var goodView = new Muzhi.goodItemView({model:good});
+        return goodView.render();
+    },
 
+    render: function () {
+       var self = this;
+       this.collection.each(function(good){
+           $("#J-list").append(self.addItem(good));
+       });
 
     }
 });

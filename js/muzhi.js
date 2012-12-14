@@ -7,6 +7,9 @@
 
 //= require_directory ./_component
 
+//= require_directory ./_util
+
+
 
 //= require_directory ./model
 //= require_directory ./collection
