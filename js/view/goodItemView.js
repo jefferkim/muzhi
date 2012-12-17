@@ -12,6 +12,7 @@ Muzhi.goodItemView = Backbone.View.extend({
 
        this.model.on("change",this.render,this);
 
+
     },
 
     //刷新价格
