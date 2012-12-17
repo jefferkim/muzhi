@@ -30,10 +30,8 @@ Muzhi.goodItemView = Backbone.View.extend({
     },
 
     render:function () {
-        var goodItemInfo = this.model.toJSON();
-        console.log(goodItemInfo);
-        console.log("changed");
-        return this.$el.html($("#J-itemTemplate").html());
+        var goodItemInfo = this.model.getItemInfo();
+        return this.$el.html(_.template($("#J-itemTemplate").html(),goodItemInfo));
     }
 
 });

@@ -17,20 +17,26 @@ Muzhi.Router = Backbone.Router.extend({
     //列表页
     list: function () {
 
-        /*var url = {api:"com.taobao.wap.rest2.wo3", data:{"method":"getItemsFromList", "listCode":11, "pageSize":"30", "pageNo":1 }};
+        /*var url = {api:"mtop.mz.getMzList", data:{"b2c":"0","cc":"0","pre":"0","page":"1","pagesize":"12","ext":"1"}};
+
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {},function(resp){
             console.log(resp);
-
+            var data = resp.data.defaultData;
+            Muzhi.Goods.reset(data.mzPartList);
+            new Muzhi.goodlistView({
+                collection:Muzhi.Goods
+            }).render();
         });*/
 
         $.ajax({
-            url:"http://127.0.0.1/gitRep/muzhi/js/json/list.json",
+            url:'js/json/list.json',
             success:function(resp){
-                Muzhi.Goods.reset(resp.MzListPart);
+                var data = resp.data.defaultData;
+                Muzhi.Goods.reset(data.mzPartList);
                 new Muzhi.goodlistView({
                     collection:Muzhi.Goods
                 }).render();
-            }
+           }
         });
 
     }

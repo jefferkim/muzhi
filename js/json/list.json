@@ -1,119 +1,270 @@
-{
-    "MzListPart": [
-        {
-            "mzBasePart": {
-                "status": "xx",
-                "userStatus": "xx",
-                "type": "xx",
-                "rule": "xx"
-            },
-            "mzCorePart": {
-                "maxPrice": "xx",
-                "minPrice": "xx"
-            },
-            "mzInfoPart": {
-                "startTime": "xx",
-                "desc": "xx"
-            },
-            "MzClickPart": {
-                "showName": "xx",
-                "clickType": "xx"
-            },
-            "mzExtPart": {
-                "numOfBarelySold": "xx"
-            }
+{"api": "mtop.mz.getMzList", "v": "1.0", "ret": ["SUCCESS::调用成功"], "data": {
+    "defaultData": {
+        "mzExtPart": {
+            "numOfBarelySold": "3",
+            "totalCount": "19"
         },
-        {
-            "mzBasePart": {
-                "status": "xx",
-                "userStatus": "xx",
-                "type": "xx",
-                "rule": "xx"
+        "mzPartList": [
+            {
+                "mzBasePart": {
+                    "gid": "55",
+                    "itemId": "1500009326815",
+                    "rule": "60_100",
+                    "status": "1",
+                    "title": "xxxx",
+                    "type": "2"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "123.00",
+                    "minPrice": "1.00",
+                    "nowPrice": "123.00",
+                    "numOfJoiners": "0"
+                }
             },
-            "mzCorePart": {
-                "maxPrice": "xx",
-                "minPrice": "xx"
+            {
+                "mzBasePart": {
+                    "gid": "146",
+                    "itemId": "1500026295810",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "1_200",
+                    "ruleDesc": "每集齐1人 立降2.00元",
+                    "status": "1",
+                    "title": "拇指测试宝贝19",
+                    "type": "0"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "19.00",
+                    "minPrice": "17.00",
+                    "nowPrice": "19.00",
+                    "numOfJoiners": "0"
+                }
             },
-            "mzInfoPart": {
-                "startTime": "xx",
-                "desc": "xx"
+            {
+                "mzBasePart": {
+                    "gid": "146",
+                    "itemId": "1500026295808",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "1_1600",
+                    "ruleDesc": "每集齐1人 立降16.00元",
+                    "status": "1",
+                    "title": "拇指测试宝贝18",
+                    "type": "0"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "18.00",
+                    "minPrice": "2.00",
+                    "nowPrice": "18.00",
+                    "numOfJoiners": "0"
+                }
             },
-            "MzClickPart": {
-                "showName": "xx",
-                "clickType": "xx"
+            {
+                "mzBasePart": {
+                    "gid": "146",
+                    "itemId": "1500026295805",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "1_200",
+                    "ruleDesc": "每集齐1人 立降2.00元",
+                    "status": "1",
+                    "title": "拇指测试宝贝14",
+                    "type": "0"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "14.00",
+                    "minPrice": "2.00",
+                    "nowPrice": "14.00",
+                    "numOfJoiners": "0"
+                }
             },
-            "mzExtPart": {
-                "numOfBarelySold": "xx"
+            {
+                "mzBasePart": {
+                    "gid": "146",
+                    "itemId": "1500026295803",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "1_300",
+                    "ruleDesc": "每集齐1人 立降3.00元",
+                    "status": "1",
+                    "title": "拇指测试宝贝7",
+                    "type": "0"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "13.00",
+                    "minPrice": "3.00",
+                    "nowPrice": "13.00",
+                    "numOfJoiners": "0"
+                }
+            },
+            {
+                "mzBasePart": {
+                    "gid": "146",
+                    "itemId": "1500026295802",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "1_200",
+                    "ruleDesc": "每集齐1人 立降2.00元",
+                    "status": "1",
+                    "title": "拇指测试宝贝5",
+                    "type": "0"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "10.00",
+                    "minPrice": "7.00",
+                    "nowPrice": "10.00",
+                    "numOfJoiners": "0"
+                }
+            },
+            {
+                "mzBasePart": {
+                    "gid": "145",
+                    "itemId": "1500026374247",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "1_200",
+                    "status": "1",
+                    "title": "即将售罄宝贝",
+                    "type": "1"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "3.00",
+                    "minPrice": "2.00",
+                    "nowPrice": "2.00",
+                    "numOfJoiners": "2"
+                }
+            },
+            {
+                "mzBasePart": {
+                    "gid": "144",
+                    "itemId": "1500026295807",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "1_600",
+                    "ruleDesc": "每集齐1人 立降6.00元",
+                    "status": "1",
+                    "title": "即将售罄的宝贝",
+                    "type": "0"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "15.00",
+                    "minPrice": "3.00",
+                    "nowPrice": "3.00",
+                    "numOfJoiners": "2"
+                }
+            },
+            {
+                "mzBasePart": {
+                    "gid": "141",
+                    "itemId": "1500013198461",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "10_3500;20_3000;30_2500;40_1000",
+                    "status": "1",
+                    "title": "H5版拇指",
+                    "type": "1"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "34.00",
+                    "minPrice": "10.00",
+                    "nowPrice": "34.00",
+                    "numOfJoiners": "1"
+                }
+            },
+            {
+                "mzBasePart": {
+                    "gid": "141",
+                    "itemId": "1500026219288",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "20_1000",
+                    "ruleDesc": "每集齐20人 立降10.00元",
+                    "status": "1",
+                    "title": "H5测试宝贝",
+                    "type": "0"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "456.00",
+                    "minPrice": "10.00",
+                    "nowPrice": "456.00",
+                    "numOfJoiners": "0"
+                }
+            },
+            {
+                "mzBasePart": {
+                    "gid": "139",
+                    "itemId": "1500018243602",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "1_100",
+                    "ruleDesc": "每集齐1人 立降1.00元",
+                    "status": "1",
+                    "title": "C匀速",
+                    "type": "0"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "100.00",
+                    "minPrice": "1.00",
+                    "nowPrice": "100.00",
+                    "numOfJoiners": "0"
+                }
+            },
+            {
+                "mzBasePart": {
+                    "gid": "95",
+                    "itemId": "1500009400029",
+                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "rule": "1_1000",
+                    "status": "1",
+                    "title": "自动化商品标题",
+                    "type": "1"
+                },
+                "mzClickPart": {
+                    "clickType": "1",
+                    "showName": "参与斗价"
+                },
+                "mzCorePart": {
+                    "maxPrice": "100.00",
+                    "minPrice": "10.00",
+                    "nowPrice": "10.00",
+                    "numOfJoiners": "1"
+                }
             }
-        },
-        {
-            "mzBasePart": {
-                "status": "xx",
-                "userStatus": "xx",
-                "type": "xx",
-                "rule": "xx"
-            },
-            "mzCorePart": {
-                "maxPrice": "xx",
-                "minPrice": "xx"
-            },
-            "mzInfoPart": {
-                "startTime": "xx",
-                "desc": "xx"
-            },
-            "MzClickPart": {
-                "showName": "xx",
-                "clickType": "xx"
-            },
-            "mzExtPart": {
-                "numOfBarelySold": "xx"
-            }
-        },
-        {
-            "mzBasePart": {
-                "status": "xx",
-                "userStatus": "xx",
-                "type": "xx",
-                "rule": "xx"
-            },
-            "mzCorePart": {
-                "maxPrice": "xx",
-                "minPrice": "xx"
-            },
-            "mzInfoPart": {
-                "startTime": "xx",
-                "desc": "xx"
-            },
-            "MzClickPart": {
-                "showName": "xx",
-                "clickType": "xx"
-            },
-            "mzExtPart": {
-                "numOfBarelySold": "xx"
-            }
-        },
-        {
-            "mzBasePart": {
-                "status": "xx",
-                "userStatus": "xx",
-                "type": "xx",
-                "rule": "xx"
-            },
-            "mzCorePart": {
-                "maxPrice": "xx",
-                "minPrice": "xx"
-            },
-            "mzInfoPart": {
-                "startTime": "xx",
-                "desc": "xx"
-            },
-            "MzClickPart": {
-                "showName": "xx",
-                "clickType": "xx"
-            },
-            "mzExtPart": {
-                "numOfBarelySold": "xx"
-            }
-        }
-    ]
-}
+        ]
+    },
+    "success": "true"
+}}
