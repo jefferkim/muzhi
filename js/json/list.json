@@ -5,6 +5,18 @@
             "totalCount": "19"
         },
         "mzPartList": [
+
+            {
+                "mzBasePart":{
+                    "gid":"146","itemId":"1500026295810","pic":"http://cdn.taobao.com/XX.gif","rule":"1_200",
+                    "ruleDesc":"每集齐1人 立降2.00元","status":"2","title":"拇指测试宝贝19","type":"0","userId":"0"
+                },
+                "mzClickPart":{
+                    "clickType":"2","showName":"立即购买"},
+                "mzCorePart":{
+                    "maxPrice":"19.00","minPrice":"17.00","nowPrice":"17.00","numOfJoiners":"2"},
+                "mzInfoPart":{"desc":"仅剩14件宝贝 速抢!"}
+            },
             {
                 "mzBasePart": {
                     "gid": "55",
@@ -29,7 +41,7 @@
                 "mzBasePart": {
                     "gid": "146",
                     "itemId": "1500026295810",
-                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "pic": "http://img02.taobaocdn.com/tps/i2/T1XWAyXk8bXXcSEnMF-193-128.png",
                     "rule": "1_200",
                     "ruleDesc": "每集齐1人 立降2.00元",
                     "status": "1",
@@ -51,7 +63,7 @@
                 "mzBasePart": {
                     "gid": "146",
                     "itemId": "1500026295808",
-                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "pic": "http://img02.taobaocdn.com/tps/i2/T1XWAyXk8bXXcSEnMF-193-128.png",
                     "rule": "1_1600",
                     "ruleDesc": "每集齐1人 立降16.00元",
                     "status": "1",
@@ -73,7 +85,7 @@
                 "mzBasePart": {
                     "gid": "146",
                     "itemId": "1500026295805",
-                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "pic": "http://img02.taobaocdn.com/tps/i2/T1XWAyXk8bXXcSEnMF-193-128.png",
                     "rule": "1_200",
                     "ruleDesc": "每集齐1人 立降2.00元",
                     "status": "1",
@@ -95,7 +107,7 @@
                 "mzBasePart": {
                     "gid": "146",
                     "itemId": "1500026295803",
-                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "pic": "http://img02.taobaocdn.com/tps/i2/T1XWAyXk8bXXcSEnMF-193-128.png",
                     "rule": "1_300",
                     "ruleDesc": "每集齐1人 立降3.00元",
                     "status": "1",
@@ -117,7 +129,7 @@
                 "mzBasePart": {
                     "gid": "146",
                     "itemId": "1500026295802",
-                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "pic": "http://img02.taobaocdn.com/tps/i2/T1XWAyXk8bXXcSEnMF-193-128.png",
                     "rule": "1_200",
                     "ruleDesc": "每集齐1人 立降2.00元",
                     "status": "1",
@@ -139,7 +151,7 @@
                 "mzBasePart": {
                     "gid": "145",
                     "itemId": "1500026374247",
-                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "pic": "http://img02.taobaocdn.com/tps/i2/T1XWAyXk8bXXcSEnMF-193-128.png",
                     "rule": "1_200",
                     "status": "1",
                     "title": "即将售罄宝贝",
@@ -160,7 +172,7 @@
                 "mzBasePart": {
                     "gid": "144",
                     "itemId": "1500026295807",
-                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "pic": "http://img02.taobaocdn.com/tps/i2/T1XWAyXk8bXXcSEnMF-193-128.png",
                     "rule": "1_600",
                     "ruleDesc": "每集齐1人 立降6.00元",
                     "status": "1",
@@ -182,7 +194,7 @@
                 "mzBasePart": {
                     "gid": "141",
                     "itemId": "1500013198461",
-                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "pic": "http://img02.taobaocdn.com/tps/i2/T1XWAyXk8bXXcSEnMF-193-128.png",
                     "rule": "10_3500;20_3000;30_2500;40_1000",
                     "status": "1",
                     "title": "H5版拇指",
@@ -203,7 +215,7 @@
                 "mzBasePart": {
                     "gid": "141",
                     "itemId": "1500026219288",
-                    "pic": "http://cdn.taobao.com/XX.gif",
+                    "pic": "http://img02.taobaocdn.com/tps/i2/T1XWAyXk8bXXcSEnMF-193-128.png",
                     "rule": "20_1000",
                     "ruleDesc": "每集齐20人 立降10.00元",
                     "status": "1",

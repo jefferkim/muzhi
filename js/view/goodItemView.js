@@ -5,7 +5,7 @@ Muzhi.goodItemView = Backbone.View.extend({
     className:"list-item",
 
     events:{
-       "click .J-priceBar":"refreshPrice"
+       "click .J-refresh":"refreshPrice"
     },
 
     initialize:function () {
