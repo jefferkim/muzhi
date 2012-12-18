@@ -52,11 +52,9 @@ a{
   -webkit-box-shadow:0 1px 3px rgba(0,0,0,0.2);
   box-shadow:0 1px 3px rgba(0,0,0,0.2);
   z-index:2;
-
-
   padding: 8px 0;
   display: -webkit-box;
-
+  z-index:1;
   li{
     height:22px;
     line-height:22px;
@@ -73,8 +71,59 @@ a{
       font-size:14px;
     }
   }
+  .J-filter{
+    .arr{
+      display: inline-block;
+      font-size: 0;
+      border-top: 2px solid #DC442F;
+      border-left: 2px solid #DC442F;
+      width: 6px;
+      height: 6px;
+      background-color: transparent;
+      -webkit-transform: rotate(225deg);
+      margin-left: 5px;
+    }
+
+  }
 }
 
+
+.drop-list{
+  z-index:2;
+  .category{
+    background-color: #444;
+    padding: 5px 0 5px 20px;
+    overflow: hidden;
+    li{
+      line-height: 30px;
+      width: 71px;
+      padding-right: 4px;
+      overflow: hidden;
+      float: left;
+      a{
+        font-size: 14px;
+        display: block;
+        color:#fff;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-align: justify;
+      }
+    }
+  }
+  b{
+    position: absolute;
+    left: 88px;
+    top: -10px;
+    width: 0;
+    height: 0;
+    border-width: 5px 5px;
+    border-style: solid;
+    border-color: transparent transparent #444;
+    font-size: 0;
+    line-height: 0;
+  }
+}
 
 .join-tip{
   width:186px;

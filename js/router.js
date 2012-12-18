@@ -14,6 +14,14 @@ Muzhi.Router = Backbone.Router.extend({
     initialize: function () {
 
        var slider =  new Swipe($('#J-slider')[0]);
+        var liTpl = '<% _.each(navItems, function(item) { %><li><a href="#!list/<%= item.id%>/p1"><%= item.name%></a></li><%});%>';
+        $.ajax({
+            url:"http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.getMzNav&type=jsonp&callback=?&v=1.0&data={}",
+            success:function(resp){
+                console.log(resp.data.defaultData.navItems);
+                $("#J-catList").html(_.template(liTpl,{navItems:resp.data.defaultData.navItems}));
+            }
+        });
 
     },
     //列表页
