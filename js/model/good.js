@@ -24,8 +24,8 @@ Muzhi.Good = Backbone.Model.extend({
 
     priceRegion:function(nowPrice){
         var t = parseInt(nowPrice);
-        console.log(t);
-      //  var dValue ＝ this.get("")
+        var dValue ＝ parseInt(this.get("mzCorePart").maxPrice - this.get("mzCorePart").minPrice);
+
         return t;
 
 
