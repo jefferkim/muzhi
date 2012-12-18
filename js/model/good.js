@@ -24,23 +24,33 @@ Muzhi.Good = Backbone.Model.extend({
 
     priceRegion:function(nowPrice){
         var t = parseInt(nowPrice);
-        var dValue ＝ parseInt(this.get("mzCorePart").maxPrice - this.get("mzCorePart").minPrice);
 
-        return t;
+        var mzCorePart = this.get("mzCorePart");
 
+       var dValue = parseInt(mzCorePart.maxPrice - mzCorePart.minPrice);
+       var region = dValue/5;
 
+       // console.log(region);
+       for(var i = 0;i<4;i++){
+           if(t > (mzCorePart.minPrice+region*i) && t< (mzCorePart.minPrice+region * (i+1))  ){
 
+               return i;
+           }
 
-
-
+       }
 
 
     },
 
     getItemInfo: function () {
+
+
         var mzBase = this.get("mzBasePart"),
             mzClick = this.get("mzClickPart"),
             mzCorePart = this.get("mzCorePart");
+
+        var i = this.priceRegion(mzCorePart.nowPrice);
+        console.log(i);
         return {
            title:mzBase.title,
            pic:mzBase.pic,

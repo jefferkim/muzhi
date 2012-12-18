@@ -8,13 +8,17 @@
 
             {
                 "mzBasePart":{
-                    "gid":"146","itemId":"1500026295810","pic":"http://cdn.taobao.com/XX.gif","rule":"1_200",
+                    "gid":"146","itemId":"1500026295810",
+                    "pic":"http://cdn.taobao.com/XX.gif","rule":"1_200",
                     "ruleDesc":"每集齐1人 立降2.00元","status":"2","title":"拇指测试宝贝19","type":"0","userId":"0"
                 },
                 "mzClickPart":{
                     "clickType":"2","showName":"立即购买"},
                 "mzCorePart":{
-                    "maxPrice":"19.00","minPrice":"17.00","nowPrice":"17.00","numOfJoiners":"2"},
+                    "maxPrice":"19.00",
+                    "minPrice":"17.00",
+                    "nowPrice":"17.00",
+                    "numOfJoiners":"2"},
                 "mzInfoPart":{"desc":"仅剩14件宝贝 速抢!"}
             },
             {
@@ -31,7 +35,7 @@
                     "showName": "参与斗价"
                 },
                 "mzCorePart": {
-                    "maxPrice": "123.00",
+                    "maxPrice": "123.10",
                     "minPrice": "1.00",
                     "nowPrice": "123.00",
                     "numOfJoiners": "0"
