@@ -29,9 +29,9 @@
             </div>
            </header>
             <ul id="J-tab" class="tab-holder">
-                <li><a href="#list" class="cur">宝贝:美容饰品</a></li>
-                <li><a href="#">即将售罄</a></li>
-                <li><a href="#">我的斗价</a></li>
+                <li><a href="#!list/all" class="cur">宝贝:美容饰品</a></li>
+                <li><a href="#!sold">即将售罄</a></li>
+                <li><a href="#!my">我的斗价</a></li>
             </ul>
             <div class="slider-wrap">
                 <div id="J-slider" class="slider">
@@ -48,38 +48,40 @@
 
            <!--list-->
            <div id="J-content" class="content">
-
                <ul id="J-list" class="list">
-
-
-
-
+                   <div class="loading"><span></span></div>
                </ul>
+               <div id="J-pageNav" class="c-pnav-con"></div>
            </div>
     </div>
 </div>
 <input type="hidden" id="J_app_key" value="12574478" />
 <script type="template" id="J-itemTemplate">
-        <div class="hd"><h3><a href="#"><%= title%></a></h3></div>
+        <div class="hd <%if(allowRefresh){%>allow-refresh<%}%>"><h3><a href="#"><%= title%></a></h3><%if(allowRefresh){%><a href="#" class="J-refresh">刷新</a><%}%></div>
         <div class="bd">
             <div class="pic">
                 <img src="<%= pic%>"/>
+                <%if(startTime){%><span class="start-time"><%= startTime%>开抢</span><%}%>
             </div>
             <div class="J-priceBar price-section">
-                <div class="price-bar"><span class="current-pos region1"></span></div>
+                <div class="price-bar"><span class="current-pos region<%= region%>"></span></div>
                 <span class="origin-price">￥<%= maxPrice%></span>
                 <span class="lowest-price">￥<%= minPrice%></span>
-                <div class="dynamic">
-                    <s></s>
+                <div class="dynamic t-region<%= region%>">
+                    <s class="a-region<%= region%>"></s>
                     <b class="current-price">￥<%= currentPrice %></b>
-                    <em>99人斗价</em>
+                    <%if(numOfJoiners){%><em><%= numOfJoiners%>人斗价</em><%}%>
                 </div>
             </div>
         </div>
         <div class="ft">
             <div class="desc"><%= desc%></div>
             <div class="handler">
-                <a href="#" class="btn <%= btnClass%>"><%= btnTxt%></a>
+                <%if(btnClass[1]){%>
+                <a href="#" class="btn <%= btnClass[0]%>"><%= btnTxt%></a>
+                <%}else{%>
+                  <span class="btn <%= btnClass[0]%>"><%= btnTxt%></span>
+                <%}%>
             </div>
         </div>
 </script>
