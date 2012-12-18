@@ -57,7 +57,11 @@ Muzhi.Router = Backbone.Router.extend({
                     collection:Muzhi.Goods
                 }).render();
 
-                var pageNav = new PageNav({'id':'#J-pageNav', 'pageCount':Math.ceil(resp.data.defaultData.mzExtPart.totalCount/12), 'objId':'p'});
+
+
+                var pageNav = new PageNav({'id':'#J-pageNav', 'pageCount':Math.ceil(data.mzExtPart.totalCount/12), 'objId':'p'});
+
+
             }
         })
 

@@ -1,6 +1,6 @@
 Muzhi.Good = Backbone.Model.extend({
-    default: function () {
-
+    defaults:{
+        "lazyRender":false //TODO:后期尝试局部刷新
     },
 
     //true,可点击
@@ -38,7 +38,6 @@ Muzhi.Good = Backbone.Model.extend({
     },
 
     tipsRegion: function (regionIndex) {
-        console.log(regionIndex);
         var tipsTop = 0,
             arrowTop = 0;
         if (regionIndex == 0) {
@@ -64,7 +63,6 @@ Muzhi.Good = Backbone.Model.extend({
                 inRegion = i;
             }
         }
-
         return inRegion;
     },
 
@@ -91,7 +89,8 @@ Muzhi.Good = Backbone.Model.extend({
             startTime: mzInfoPart.startTime ? mzInfoPart.startTime : false,  //即将开始的时候存在startTime字段
             region: inRegion,
             tipsRegion: tipsRegion,
-            allowRefresh: [3, 4, 1, 2, 7].indexOf(parseInt(mzBase.status)) != -1
+            allowRefresh: [3, 4, 1, 2, 7].indexOf(parseInt(mzBase.status)) != -1,
+            detailUrl: mzBase.status == 2 ? "http://a.m.taobao.com/i"+mzBase.itemId+".htm" : "#" //立刻购买是跳转地址
         };
     }
 

@@ -64,9 +64,9 @@
                 <%if(startTime){%><span class="start-time"><%= startTime%>开抢</span><%}%>
             </div>
             <div class="J-priceBar price-section">
-                <div class="price-bar"><span class="current-pos region<%= region%>"></span></div>
                 <span class="origin-price">￥<%= maxPrice%></span>
                 <span class="lowest-price">￥<%= minPrice%></span>
+                <div class="price-bar"><span class="current-pos region<%= region%>"></span></div>
                 <div class="dynamic t-region<%= region%>">
                     <s class="a-region<%= region%>"></s>
                     <b class="current-price">￥<%= currentPrice %></b>
@@ -78,7 +78,7 @@
             <div class="desc"><%= desc%></div>
             <div class="handler">
                 <%if(btnClass[1]){%>
-                <a href="#" class="btn <%= btnClass[0]%>"><%= btnTxt%></a>
+                <a href="<%= detailUrl%>" class="btn <%= btnClass[0]%>"><%= btnTxt%></a>
                 <%}else{%>
                   <span class="btn <%= btnClass[0]%>"><%= btnTxt%></span>
                 <%}%>
