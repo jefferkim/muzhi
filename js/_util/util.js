@@ -3,14 +3,13 @@ Muzhi.Util = {
     getMenu: function () {
         var self = this;
         var liTpl = '<% _.each(navItems, function(item) { %><li><a href="#!list/<%= item.id%>/p1" id="J-catA-<%= item.id%>"><%= item.name%></a></li><%});%>';
-        $.ajax({
-            url: "http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.getMzNav&type=jsonp&callback=?&v=1.0&data={}",
-            success: function (resp) {
-                var menuList = Muzhi.menuList = resp.data.defaultData.navItems;
-                menuList.unshift({"id":0,"name":"全部"});
-                $("#J-catList").html(_.template(liTpl, {navItems: menuList}));
-                self.setCurrentMenu(location.hash.split("/")[1]);
-            }
+
+        var url = {api:"mtop.mz.getMzNav",data:{}};
+        Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+            var menuList = Muzhi.menuList = resp.data.defaultData.navItems;
+            menuList.unshift({"id":0,"name":"全部"});
+            $("#J-catList").html(_.template(liTpl, {navItems: menuList}));
+            self.setCurrentMenu(location.hash.split("/")[1]);
         });
     },
 
