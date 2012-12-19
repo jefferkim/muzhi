@@ -38,7 +38,7 @@ Muzhi.goodItemView = Backbone.View.extend({
             //url: 'http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.getMzItemInfo&v=1.0&type=jsonp&callback=?&data=' +
            //     JSON.stringify({"itemId": currentModel.get("mzBasePart").itemId}),
 
-            url:"http://127.0.0.1/gitRep/muzhi/js/json/refresh.json",
+            url:"js/json/refresh.json",
 
             success: function (resp) {
                 self.refreshRender(resp.data.defaultData);
