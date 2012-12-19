@@ -17,25 +17,17 @@ Muzhi.goodItemView = Backbone.View.extend({
 
     join: function (e) {
         e.preventDefault();
-
         var currentModel = this.model;
         var successTpl = '<div class="join-tip"><em class="cz"></em><b>斗价成功</b>您可以立即购买,也可以继续等待</div>';
         $.ajax({
             url: 'http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.doJoinMz&v=1.0&type=jsonp&callback=?&data=' + JSON.stringify({"itemId": currentModel.get("mzBasePart").itemId}),
             success: function (resp) {
+                if(!Muzhi.Util._checkLogin(resp)) return;
                 notification.flash(successTpl).show();
-/*
-                var newData = currentModel.toJSON();
-                newData.mzBasePart.status = 2;
-                newData.mzClickPart.showName = "立刻购买";*/
-
-
-                currentModel.set(newData);
+                currentModel.set(resp.data.defaultData);
                 currentModel.trigger("joinNow");//backbone不判断深度
             }
-        })
-
-
+        });
     },
     //刷新价格
     refreshPrice: function (e) {

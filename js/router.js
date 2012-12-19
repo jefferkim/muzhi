@@ -14,23 +14,40 @@ Muzhi.Router = Backbone.Router.extend({
     initialize: function () {
         var self = this;
         var slider = new Swipe($('#J-slider')[0]);
-        $(".J-filter").on("click",function(e){
+
+        //分类显示
+        Muzhi.Util.catShow();
+
+       /* window.addEventListener("hashchange",function(){
+            var locHash = location.hash.split("/")[0];
+            var CURCLS = "cur";
+            $("a","#J-tab").removeClass(CURCLS);
+            switch(locHash){
+                case "#!list":
+                    $("#J-filterLink").addClass(CURCLS);
+                    break;
+                case "#!sold":
+                    $("#J-soldOut").addClass(CURCLS);
+                    break;
+                case "#!my":
+                    $("#J-My").addClass(CURCLS);
+                    break;
+                default :
+                    $("#J-filterLink").addClass(CURCLS);
+                    break;
+            }
+        },false);*/
+
+        var tabA = $("a","#J-tab");
+        tabA.on("click",function(e){
             e.preventDefault();
-            $("#J-catSel").show();
-        });
-        var locHash = location.hash.split("/")[0];
-        $("a", "#J-tab").each(function () {
-           /* if ($(this).attr("href").index(locHash) != -1) {
-                $(this).addClass("cur");
-            }*/
+            var url = $(this).attr("href");
+            tabA.removeClass("cur");
+            $(this).addClass("cur");
+            self.navigate(url,{'trigger':true});
         });
 
-        $("#J-catList").on("click","a",function(e){
-            e.preventDefault();
-            var target = e.target;
-            $("#J-catSel").hide();
-            self.navigate($(target).attr("href"),{'trigger':true});
-        })
+
     },
 
     _listRender: function (resp) {
@@ -42,7 +59,7 @@ Muzhi.Router = Backbone.Router.extend({
         var data = resp.data.defaultData;
         var soldObj = $("#J-soldNum");
         (data.mzExtPart && data.mzExtPart.numOfBarelySold) ? soldObj.text(data.mzExtPart.numOfBarelySold) : soldObj.hide();
-        data.mzExt
+
         Muzhi.Goods.reset(data.mzPartList);
         new Muzhi.goodlistView({
             collection: Muzhi.Goods
