@@ -19,31 +19,36 @@ Muzhi.goodItemView = Backbone.View.extend({
         e.preventDefault();
         var currentModel = this.model;
         var successTpl = '<div class="join-tip"><em class="cz"></em><b>斗价成功</b>您可以立即购买,也可以继续等待</div>';
-        $.ajax({
-            url: 'http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.doJoinMz&v=1.0&type=jsonp&callback=?&data=' + JSON.stringify({"itemId": currentModel.get("mzBasePart").itemId}),
-            success: function (resp) {
-                if(!Muzhi.Util._checkLogin(resp)) return;
-                notification.flash(successTpl).show();
-                currentModel.set(resp.data.defaultData);
-                currentModel.trigger("joinNow");//backbone不判断深度
+
+        var url = {api:"mtop.mz.doJoinMz",data:{"itemId": currentModel.get("mzBasePart").itemId}}
+        Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+            if(!Muzhi.Util._checkLogin(resp)) return;
+            if(resp.data.success == "false"){
+                notification.falsh(resp.data.errorMsg);
+                return ;
             }
+            var currentMyNum = $("#J-myNum");
+            notification.flash(successTpl).show();
+            currentModel.set(resp.data.defaultData);
+            currentMyNum.text(parseInt(currentMyNum.text())+1);
+
+            currentModel.trigger("joinNow");//backbone不判断深度
+
         });
+
     },
     //刷新价格
     refreshPrice: function (e) {
         e.preventDefault();
         var self = this;
         var currentModel = this.model;
-        $.ajax({
-            //url: 'http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.getMzItemInfo&v=1.0&type=jsonp&callback=?&data=' +
-           //     JSON.stringify({"itemId": currentModel.get("mzBasePart").itemId}),
 
-            url:"js/json/refresh.json",
+        var url = {api:"mtop.mz.getMzItemInfo",data:{"itemId": currentModel.get("mzBasePart").itemId}};
+        Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
 
-            success: function (resp) {
-                self.refreshRender(resp.data.defaultData);
-            }
-        })
+            self.refreshRender(resp.data.defaultData);
+        });
+
     },
 
     refreshRender:function(data){

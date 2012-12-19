@@ -41,12 +41,22 @@ Muzhi.Router = Backbone.Router.extend({
         if(!Muzhi.Util._checkLogin(resp)) return;
 
         if(resp.data.success == "false"){
-            notification.flash("调用请求错误").show();
+            notification.flash(resp.data.errorMsg).show();
             return ;
         }
         var data = resp.data.defaultData;
+        if(!data){ //没有商品
+            $("#J-list").html('');
+            $("#J-pageNav").html('');
+            return;
+        }
         var soldObj = $("#J-soldNum");
-        (data.mzExtPart && data.mzExtPart.numOfBarelySold) ? soldObj.text(data.mzExtPart.numOfBarelySold) : soldObj.hide();
+        if(resp.api.indexOf("getMzBarelyList") !=-1){
+            data.mzExtPart ? soldObj.text(data.mzExtPart.totalCount).show() : soldObj.hide();
+        }else{
+            (data.mzExtPart && data.mzExtPart.numOfBarelySold) ? soldObj.text(data.mzExtPart.numOfBarelySold).show() : soldObj.text(0).hide();
+        }
+
 
         Muzhi.Goods.reset(data.mzPartList);
         new Muzhi.goodlistView({
@@ -77,25 +87,22 @@ Muzhi.Router = Backbone.Router.extend({
 
     sold: function (pageNo) {
         var self = this;
-        $.ajax({
-            url: 'http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.getMzBarelyList&v=1.0&type=jsonp&callback=?&data=' +
-                JSON.stringify({"b2c": "0", "page": pageNo || 1, "pagesize": "12"}),
-            success: function (resp) {
-                self._listRender(resp);
-            }
-        })
+        var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": "0", "page": pageNo || 1, "pagesize": "12"}};
+        Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+            self._listRender(resp);
+        });
+
     },
 
     my: function (pageNo) {
         var self = this;
-        $.ajax({
-            url: 'http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.getMyMzList&v=1.0&type=jsonp&callback=?&data=' +
-                JSON.stringify({"page": pageNo || 1, "pagesize": "12"}),
-            //url:"js/json/list2.json",
-            success: function (resp) {
-                self._listRender(resp);
-            }
-        })
+        var url = {api:"mtop.mz.getMyMzList",data:{"page": pageNo || 1, "pagesize": "12"}};
+        Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+            var myNum = $("#J-myNum"),data = resp.data.defaultData;
+            data.mzExtPart ? myNum.text(data.mzExtPart.totalCount).show() : myNum.text(0).hide();
+            self._listRender(resp);
+        });
+
     }
 
 });
