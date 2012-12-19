@@ -24,10 +24,11 @@ Muzhi.goodItemView = Backbone.View.extend({
             url: 'http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.doJoinMz&v=1.0&type=jsonp&callback=?&data=' + JSON.stringify({"itemId": currentModel.get("mzBasePart").itemId}),
             success: function (resp) {
                 notification.flash(successTpl).show();
-
+/*
                 var newData = currentModel.toJSON();
                 newData.mzBasePart.status = 2;
-                newData.mzClickPart.showName = "立刻购买";
+                newData.mzClickPart.showName = "立刻购买";*/
+
 
                 currentModel.set(newData);
                 currentModel.trigger("joinNow");//backbone不判断深度
