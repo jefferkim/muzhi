@@ -12,7 +12,7 @@ Muzhi.goodlistView = Backbone.View.extend({
 
     render: function () {
         var self = this;
-        $("#J-list").html("");
+        $("#J-list").html('');
         this.collection.each(function (good) {
             $("#J-list").append(self.addItem(good));
         });

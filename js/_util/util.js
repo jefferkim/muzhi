@@ -22,7 +22,7 @@ Muzhi.Util = {
         $("#J-catA-"+id).addClass("cur");
 
         $("small",".J-filter").text(currentMenu.name);
-        $("a",".J-filter").attr("href","#!list/"+id+"")
+        $("a",".J-filter").attr("href","#!list/"+id+"/p1")
     },
 
     _checkLogin:function(resp){
@@ -40,9 +40,28 @@ Muzhi.Util = {
 
     catShow:function(){
 
+        var locHash = location.hash.split("/")[0];
+        var CURCLS = "cur";
+        $("a","#J-tab").removeClass(CURCLS);
+        switch(locHash){
+            case "#!list":
+                $("#J-filterLink").addClass(CURCLS);
+                break;
+            case "#!sold":
+                $("#J-soldOut").addClass(CURCLS);
+                break;
+            case "#!my":
+                $("#J-My").addClass(CURCLS);
+                break;
+            default :
+                $("#J-filterLink").addClass(CURCLS);
+                break;
+        }
+
         $(".J-filter").on("click",function(e){
             e.preventDefault();
             $("#J-catSel").show();
+            $(this).find(".arr").addClass("up");
         });
 
         $("#J-catList").on("click","a",function(e){
@@ -50,6 +69,7 @@ Muzhi.Util = {
             $("#J-catSel").hide();
             var hashToGo = $(this).attr("href");
             $("a",".J-filter").attr("href",hashToGo);
+            $(".arr",".J-filter").removeClass("up");
             Muzhi.router.navigate(hashToGo,{'trigger':true});
         });
 

@@ -50,10 +50,11 @@ Muzhi.Good = Backbone.Model.extend({
         }
         return [tipsTop, arrowTop];
     },
-
+    //TODO:后期加入四舍五入的方式，但是会和现有想要实现的方案冲突，考虑到浮点数运算的很多问题，整数运算更能完成现有的交互逻辑
     priceRegion: function () {
+
         var mzCorePart = this.get("mzCorePart"),
-            nowPrice = parseInt(mzCorePart.nowPrice),
+            nowPrice = parseInt(mzCorePart.nowPrice || mzCorePart.maxPrice),  //即将开始时不提供当前值
             maxPrice = parseInt(mzCorePart.maxPrice),
             minPrice = parseInt(mzCorePart.minPrice),
             region = this.toFixed((maxPrice - minPrice) / 5, 2),
@@ -79,6 +80,7 @@ Muzhi.Good = Backbone.Model.extend({
         return {
             title: mzBase.title,
             pic: mzBase.pic,
+            link: "http://a.m.taobao.com/i"+mzBase.itemId+".htm",
             desc: mzInfoPart.desc,
             btnTxt: mzClick.showName, //按钮显示文案
             maxPrice: mzCorePart.maxPrice,

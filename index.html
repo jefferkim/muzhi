@@ -29,7 +29,7 @@
             </div>
            </header>
             <ul id="J-tab" class="tab-holder">
-                <li class="J-filter"><a href="#!list/0/p1" id="J-filterLink">宝贝:<small>全部</small><span class="arr up"></span></a></li>
+                <li class="J-filter"><a href="#!list/0/p1" id="J-filterLink">宝贝:<small>全部</small><span class="arr"></span></a></li>
                 <li><a href="#!sold/p1" id="J-soldOut">即将售罄</a><em class="pop-num" id="J-soldNum"></em></li>
                 <li><a href="#!my/p1" id="J-My">我的斗价</a><em class="pop-num" id="J-myNum"></em></li>
             </ul>
@@ -63,11 +63,11 @@
 </div>
 <input type="hidden" id="J_app_key" value="12574478" />
 <script type="template" id="J-itemTemplate">
-        <div class="hd <%if(allowRefresh){%>allow-refresh<%}%>"><h3><a href="#"><%= title%></a></h3><%if(allowRefresh){%><a href="#" class="J-refresh">刷新</a><%}%></div>
+        <div class="hd <%if(allowRefresh){%>allow-refresh<%}%>"><h3><a href="<%= link%>"><%= title%></a></h3><%if(allowRefresh){%><a href="#" class="J-refresh">刷新</a><%}%></div>
         <div class="bd">
             <div class="pic">
-                <img src="<%= pic%>"/>
-                <%if(startTime){%><span class="start-time"><%= startTime%>开抢</span><%}%>
+                <a href="<%= link%>"><img src="<%= pic%>"/></a>
+                <%if(startTime){%><span class="start-time"><s></s><%= startTime%>开抢</span><%}%>
             </div>
             <div class="J-priceBar price-section">
                 <span class="origin-price">￥<%= maxPrice%></span>
