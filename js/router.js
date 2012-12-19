@@ -64,16 +64,15 @@ Muzhi.Router = Backbone.Router.extend({
         else
             Muzhi.Util.setCurrentMenu(id);
 
-        var data = {"b2c": "0", "cc": id||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"};
         $("#J-list").html('<div class="loading"><span></span></div>');
 
-        $.ajax({
-            url: 'http://api.waptest.taobao.com/rest/api2.do?api=mtop.mz.getMzList&v=1.0&type=jsonp&callback=?&data=' +
-                JSON.stringify(data),
-            success: function (resp) {
-                self._listRender(resp);
-            }
-        })
+        var url = {api:"mtop.mz.getMzList", data:{"b2c": "0", "cc": id||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
+
+        Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+
+            self._listRender(resp);
+        });
+
     },
 
     sold: function (pageNo) {
