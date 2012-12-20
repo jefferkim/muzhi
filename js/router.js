@@ -98,6 +98,11 @@ Muzhi.Router = Backbone.Router.extend({
         var self = this;
         var url = {api:"mtop.mz.getMyMzList",data:{"page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+            if(!resp.data.defaultData){ //没有商品
+                $("#J-list").html('');
+                $("#J-pageNav").html('');
+                return;
+            }
             var myNum = $("#J-myNum"),data = resp.data.defaultData;
             data.mzExtPart ? myNum.text(data.mzExtPart.totalCount).show() : myNum.text(0).hide();
             self._listRender(resp);
