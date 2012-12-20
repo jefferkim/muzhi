@@ -91,18 +91,24 @@ Muzhi.Router = Backbone.Router.extend({
         var self = this;
         var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": "0", "page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+            if(!resp.data.defaultData){ //没有商品
+                $("#J-list").html('<li class="tip-no-sold"><p class="txt">暂无即将售罄宝贝，返回宝贝页面</p><p>页面虽不曾留下痕迹，但我知你已飞过</p></li>');
+                $("#J-pageNav").html('');
+                return;
+            }
             self._listRender(resp);
         });
 
     },
 
+    //TODO:统一没有商品提示文案
     my: function (pageNo) {
         var self = this;
         $("#J-sliderWrap").hide();
         var url = {api:"mtop.mz.getMyMzList",data:{"page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             if(!resp.data.defaultData){ //没有商品
-                $("#J-list").html('暂无即将售罄的宝贝，返回宝贝页面');
+                $("#J-list").html('<li class="tip-no-dj"><div class="icon"></div><p class="txt">还未参与斗价，快去斗个宝贝吧！</p><p>给你一张画布，绘一个缤纷世界</p></li>');
                 $("#J-pageNav").html('');
                 return;
             }
