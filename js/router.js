@@ -46,7 +46,7 @@ Muzhi.Router = Backbone.Router.extend({
         }
         var data = resp.data.defaultData;
         if(!data){ //没有商品
-            $("#J-list").html('');
+            $("#J-list").html('<li class="tip-no-sold"><p class="txt">暂无宝贝，敬请期待！</p></li>');
             $("#J-pageNav").html('');
             return;
         }
