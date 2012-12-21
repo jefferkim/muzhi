@@ -7,7 +7,6 @@ Muzhi.Util = {
         var url = {api:"mtop.mz.getMzNav",data:{}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             var menuList = Muzhi.menuList = resp.data.defaultData.navItems;
-            menuList.unshift({"id":0,"name":"全部"});
             $("#J-catList").html(_.template(liTpl, {navItems: menuList}));
             self.setCurrentMenu(location.hash.split("/")[1]);
         });
@@ -59,8 +58,8 @@ Muzhi.Util = {
 
         $(".J-filter").on("click",function(e){
             e.preventDefault();
-            $("#J-catSel").show();
-            $(this).find(".arr").addClass("up");
+            $("#J-catSel").toggle();
+            $(this).find(".arr").toggleClass("up");
         });
 
         $("#J-catList").on("click","a",function(e){
