@@ -55,13 +55,13 @@ Muzhi.Util = {
                 $("#J-filterLink").addClass(CURCLS);
                 break;
         }
-
-        $(".J-filter").on("click",function(e){
+        
+        $("span","#J-filterLink").on("click",function(e){
             e.preventDefault();
             $("#J-catSel").toggle();
-            $(this).find(".arr").toggleClass("up");
+            $(this).toggleClass("up");
         });
-
+        
         $("#J-catList").on("click","a",function(e){
             e.preventDefault();
             $("#J-catSel").hide();
