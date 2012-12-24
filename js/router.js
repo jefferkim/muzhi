@@ -52,11 +52,10 @@ Muzhi.Router = Backbone.Router.extend({
         }
         var soldObj = $("#J-soldNum");
         if(resp.api.indexOf("getMzBarelyList") !=-1){
-            data.mzExtPart ? soldObj.text(data.mzExtPart.totalCount).show() : soldObj.hide();
-        }else{
-            (data.mzExtPart && data.mzExtPart.numOfBarelySold) ? soldObj.text(data.mzExtPart.numOfBarelySold).show() : soldObj.text(0).hide();
+            data.mzExtPart ? soldObj.text(data.mzExtPart.totalCount).show() : soldObj.text("").hide();
+        }else if(resp.api.indexOf("getMzList") != -1 && soldObj.html() == ""){
+            (data.mzExtPart && data.mzExtPart.numOfBarelySold && data.mzExtPart.numOfBarelySold !='0') ? soldObj.text(data.mzExtPart.numOfBarelySold).show() : soldObj.text(0).hide();
         }
-
 
         Muzhi.Goods.reset(data.mzPartList);
         new Muzhi.goodlistView({
@@ -69,7 +68,7 @@ Muzhi.Router = Backbone.Router.extend({
     //列表页
     list: function (id, pageNo) {
         var self = this;
-        $("#J-sliderWrap").show();
+        self._showNav();
         if (!Muzhi.menuList)
             Muzhi.Util.getMenu();
         else
@@ -94,6 +93,7 @@ Muzhi.Router = Backbone.Router.extend({
             if(!resp.data.defaultData){ //没有商品
                 $("#J-list").html('<li class="tip-no-sold"><p class="txt">暂无即将售罄宝贝，返回宝贝页面</p><p>页面虽不曾留下痕迹，但我知你已飞过</p></li>');
                 $("#J-pageNav").html('');
+                $("#J-soldNum").hide();
                 return;
             }
             self._listRender(resp);
@@ -122,10 +122,22 @@ Muzhi.Router = Backbone.Router.extend({
     
     // hide:隐藏频道导航
     _hideNav: function(){
+    	$("#J-filterLink").find("small").hide();
+    	$("#J-filterLink").find(".arr").hide();
     	$("#J-catSel").hide();
     	$("#J-sliderWrap").hide();
-        $("#J-filterLink").find('.arr').addClass('up');
+        //$("#J-filterLink").find('.arr').addClass('up');
+    },
+    
+    // hide:显示频道导航
+    _showNav: function(){
+    	$("#J-filterLink").find("small").show();
+    	$("#J-filterLink").find(".arr").show();
+    	$("#J-catSel").show();
+    	$("#J-sliderWrap").show();
+        //$("#J-filterLink").find('.arr').addClass('up');
     }
+    
 });
 
 
