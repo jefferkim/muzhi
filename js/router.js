@@ -107,6 +107,7 @@ Muzhi.Router = Backbone.Router.extend({
         $("#J-sliderWrap").hide();
         var url = {api:"mtop.mz.getMyMzList",data:{"page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+        	if(!Muzhi.Util._checkLogin(resp)) return;
             if(!resp.data.defaultData){ //没有商品
                 $("#J-list").html('<li class="tip-no-dj"><div class="icon"></div><p class="txt">还未参与斗价，快去斗个宝贝吧！</p><p>给你一张画布，绘一个缤纷世界</p></li>');
                 $("#J-pageNav").html('');
