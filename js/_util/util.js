@@ -56,10 +56,10 @@ Muzhi.Util = {
                 break;
         }
         
-        $("span","#J-filterLink").on("click",function(e){
+        $("#J-filterLink").on("click",function(e){
             e.preventDefault();
             $("#J-catSel").toggle();
-            $(this).toggleClass("up");
+            $(this).find('.arr').toggleClass("up");
         });
         
         $("#J-catList").on("click","a",function(e){

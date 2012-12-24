@@ -87,8 +87,8 @@ Muzhi.Router = Backbone.Router.extend({
     },
 
     sold: function (pageNo) {
-        $("#J-sliderWrap").hide();
         var self = this;
+        self._hideNav();
         var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": "0", "page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             if(!resp.data.defaultData){ //没有商品
@@ -104,7 +104,7 @@ Muzhi.Router = Backbone.Router.extend({
     //TODO:统一没有商品提示文案
     my: function (pageNo) {
         var self = this;
-        $("#J-sliderWrap").hide();
+        self._hideNav();
         var url = {api:"mtop.mz.getMyMzList",data:{"page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
         	if(!Muzhi.Util._checkLogin(resp)) return;
@@ -118,8 +118,14 @@ Muzhi.Router = Backbone.Router.extend({
             self._listRender(resp);
         });
 
+    },
+    
+    // hide:隐藏频道导航
+    _hideNav: function(){
+    	$("#J-catSel").hide();
+    	$("#J-sliderWrap").hide();
+        $("#J-filterLink").find('.arr').addClass('up');
     }
-
 });
 
 
