@@ -56,8 +56,8 @@ Muzhi.goodItemView = Backbone.View.extend({
             newRegion = this.model.set(data).priceRegion();
 
         var posTransformArray = [110,92,69,46,23,3], //pos的运动位置
-            tipTransformArray = [85,80,57,35,20,0], //tip的运动位置
-            arrowTransformArray = [28,15,15,15,7,7];//小箭头的位置,最主要小箭头的位置
+            tipTransformArray = [85,65,57,35,20,0], //tip的运动位置
+            arrowTransformArray = [28,29,15,15,7,7];//小箭头的位置,最主要小箭头的位置
 
         var pos = this.$el.find(".current-pos"),
             tip = this.$el.find(".dynamic"),
