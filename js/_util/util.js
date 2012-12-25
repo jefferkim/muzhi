@@ -19,7 +19,7 @@ Muzhi.Util = {
         $("a","#J-catList").removeClass("cur");
         $("#J-catA-"+id).addClass("cur");
 
-        $("small",".J-filter").text(currentMenu.name);
+        $("small",".J-filter").text(":"+currentMenu.name);
         $("a",".J-filter").attr("href","#!list/"+id+"/p1")
     },
 
