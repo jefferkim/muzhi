@@ -91,7 +91,7 @@ Muzhi.Good = Backbone.Model.extend({
             startTime: mzInfoPart.startTime ? mzInfoPart.startTime : false,  //即将开始的时候存在startTime字段
             region: inRegion,
             tipsRegion: tipsRegion,
-            allowRefresh: [3, 4, 1, 2, 7].indexOf(parseInt(mzBase.status)) != -1,
+            allowRefresh: [3, 4, 1, 2, 7].indexOf(parseInt(mzBase.status)) != -1,   //TODO:已经斗至最低的
             detailUrl: mzBase.status == 2 ? "http://a.m.taobao.com/i"+mzBase.itemId+".htm" : "#" //立刻购买是跳转地址
         };
     }

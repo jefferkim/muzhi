@@ -10,6 +10,7 @@ Muzhi.Router = Backbone.Router.extend({
         '!sold/p:pageNo': "sold",//售罄
         '!my/p:pageNo': "my"//我的斗价
     },
+    //TODO:代付款
 
     initialize: function () {
         var self = this;
