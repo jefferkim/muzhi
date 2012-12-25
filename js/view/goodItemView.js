@@ -6,13 +6,13 @@ Muzhi.goodItemView = Backbone.View.extend({
 
     events: {
         "click .J-refresh": "refreshPrice",
-        "click .J-join": "join"
+        "click .J-join": "join",
+        "tap .dynamic": "refreshPrice"
     },
 
     initialize: function () {
 
         this.model.on("joinNow", this.render, this);
-
     },
 
     join: function (e) {
