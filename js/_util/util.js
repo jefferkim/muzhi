@@ -8,7 +8,8 @@ Muzhi.Util = {
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             var menuList = Muzhi.menuList = resp.data.defaultData.navItems;
             $("#J-catList").html(_.template(liTpl, {navItems: menuList}));
-            self.setCurrentMenu(location.hash.split("/")[1]);
+            var isList = location.hash.match(/!list\/(\d)/);
+            self.setCurrentMenu(isList&&isList[1] || 0);
         });
     },
 
@@ -19,7 +20,7 @@ Muzhi.Util = {
         $("a","#J-catList").removeClass("cur");
         $("#J-catA-"+id).addClass("cur");
 
-        $("small",".J-filter").text(currentMenu.name);
+        $("small",".J-filter").text(":"+currentMenu.name);
         $("a",".J-filter").attr("href","#!list/"+id+"/p1")
     },
 

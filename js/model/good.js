@@ -37,19 +37,7 @@ Muzhi.Good = Backbone.Model.extend({
         return n;
     },
 
-    tipsRegion: function (regionIndex) {
-        var tipsTop = 0,
-            arrowTop = 0;
-        if (regionIndex == 0) {
-            tipsTop = 100;
-            arrowTop = 90;
-        }
-        if (regionIndex == 5) {
-            tipsTop = 0;
-            arrowTop = 10;
-        }
-        return [tipsTop, arrowTop];
-    },
+
     //TODO:后期加入四舍五入的方式，但是会和现有想要实现的方案冲突，考虑到浮点数运算的很多问题，整数运算更能完成现有的交互逻辑
     priceRegion: function () {
 
@@ -75,7 +63,7 @@ Muzhi.Good = Backbone.Model.extend({
 
         var inRegion = this.priceRegion();
 
-        var tipsRegion = this.tipsRegion(inRegion);
+
 
         return {
             title: mzBase.title,
@@ -90,9 +78,10 @@ Muzhi.Good = Backbone.Model.extend({
             btnClass: this.stateMap(mzBase.status),
             startTime: mzInfoPart.startTime ? mzInfoPart.startTime : false,  //即将开始的时候存在startTime字段
             region: inRegion,
-            tipsRegion: tipsRegion,
-            allowRefresh: [3, 4, 1, 2, 7].indexOf(parseInt(mzBase.status)) != -1,
-            detailUrl: mzBase.status == 2 ? "http://a.m.taobao.com/i"+mzBase.itemId+".htm" : (mzBase.status==3?"http://tm.m.taobao.com/list.htm?statusId=1":"#") //立刻购买是跳转地址
+            tipsRegion: tipsRegion,            
+            detailUrl: mzBase.status == 2 ? "http://a.m.taobao.com/i"+mzBase.itemId+".htm" : (mzBase.status==3?"http://tm.m.taobao.com/list.htm?statusId=1":"#"), //立刻购买是跳转地址
+            allowRefresh: [3, 4, 1, 2, 7].indexOf(parseInt(mzBase.status)) != -1 && mzCorePart.nowPrice != mzCorePart.minPrice,   //TODO:已经斗至最低的
+            
         };
     }
 

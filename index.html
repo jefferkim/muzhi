@@ -29,9 +29,15 @@
             </div>
            </header>
             <ul id="J-tab" class="tab-holder">
+<<<<<<< HEAD
                 <li class="J-filter"><a href="#!list/0/p1" id="J-filterLink">宝贝:<small>全部</small><span class="arr"></span></a></li>
                 <li><a href="#!sold/p1" id="J-soldOut">即将售罄</a><em class="pop-num" id="J-soldNum" style="display:none"></em></li>
                 <li><a href="#!my/p1" id="J-My">我的斗价</a><em class="pop-num" id="J-myNum" style="display:none;"></em></li>
+=======
+                <li class="J-filter"><a href="#!list/0/p1" id="J-filterLink">宝贝<small>:全部</small><span class="arr"></span></a></li>
+                <li><a href="#!sold/p1" id="J-soldOut">即将售罄</a><em class="pop-num" id="J-soldNum"></em></li>
+                <li><a href="#!my" id="J-My">我的斗价</a><em class="pop-num" id="J-myNum" style="display:none;"></em></li>
+>>>>>>> c23a014f73a69952699d21c0c1279ccb78ad3cd1
             </ul>
             <div class="drop-list" id="J-catSel">
                 <b></b>
@@ -48,7 +54,7 @@
                     </ul>
                 </div>
                 <nav>
-                    <span id="J-position"><em class="on">•</em><em>•</em><em>•</em></span>
+                    <span id="J-position"><em class="on"></em><em></em><em></em></span>
                 </nav>
             </div>
 
@@ -63,7 +69,8 @@
 </div>
 <input type="hidden" id="J_app_key" value="12574478" />
 <script type="template" id="J-itemTemplate">
-        <div class="hd <%if(allowRefresh){%>allow-refresh<%}%>"><h3><a href="<%= link%>"><%= title%></a></h3><%if(allowRefresh){%><a href="#" class="J-refresh">刷新</a><%}%></div>
+        <div class="hd <%if(allowRefresh){%>allow-refresh<%}%>"><h3><a href="<%= link%>"><%= title%></a></h3>
+            <%if(allowRefresh){%><a href="#" class="J-refresh"><s>刷新</s></a><%}%></div>
         <div class="bd">
             <div class="pic">
                 <a href="<%= link%>"><img src="<%= pic%>"/></a>

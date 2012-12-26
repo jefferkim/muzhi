@@ -5,11 +5,14 @@ Muzhi.Goods = new Muzhi.goodList;
 Muzhi.Router = Backbone.Router.extend({
 
     routes: {
-        '': "list", //首页
+        '': "listDefault", //首页
         '!list/:id/p:pageNo': "list", //列表
+        '!page/-p:pageNo':"listAll",//
         '!sold/p:pageNo': "sold",//售罄
-        '!my/p:pageNo': "my"//我的斗价
+        '!my/p:pageNo': "my",//我的斗价
+        '!my':"my"//
     },
+    //TODO:代付款
 
     initialize: function () {
         var self = this;
@@ -65,24 +68,36 @@ Muzhi.Router = Backbone.Router.extend({
         var pageNav = new PageNav({'id': '#J-pageNav', 'pageCount': Math.ceil(data.mzExtPart.totalCount / 12), 'objId': 'p'});
     },
 
-    //列表页
-    list: function (id, pageNo) {
+    _queryList:function(listId,pageNo){
         var self = this;
         self._showNav();
         if (!Muzhi.menuList)
             Muzhi.Util.getMenu();
         else
-            Muzhi.Util.setCurrentMenu(id);
+            Muzhi.Util.setCurrentMenu(listId);
 
         $("#J-list").html('<div class="loading"><span></span></div>');
 
-        var url = {api:"mtop.mz.getMzList", data:{"b2c": "0", "cc": id||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
+        var url = {api:"mtop.mz.getMzList", data:{"b2c": "0", "cc": listId||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
 
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
 
             self._listRender(resp);
         });
 
+    },
+
+    //列表页
+    list: function (id, pageNo) {
+        this._queryList(id,pageNo);
+    },
+
+    listDefault:function(){
+         this._queryList(0);
+    },
+    //获取全部列表
+    listAll:function(pageNo){
+        this._queryList(0,pageNo);
     },
 
     sold: function (pageNo) {
