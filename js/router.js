@@ -77,7 +77,8 @@ Muzhi.Router = Backbone.Router.extend({
 
         $("#J-list").html('<div class="loading"><span></span></div>');
 
-        var url = {api:"mtop.mz.getMzList", data:{"b2c": "0", "cc": listId||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
+
+        var url = {api:"mtop.mz.getMzList", data:{"b2c":Number(MZCONFIG.isTmall), "cc": listId||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
 
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
 
@@ -103,7 +104,7 @@ Muzhi.Router = Backbone.Router.extend({
         var self = this;
         self._hideNav();
         $("#J-list").html('<div class="loading"><span></span></div>');
-        var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": "0", "page": pageNo || 1, "pagesize": "12"}};
+        var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": Number(MZCONFIG.isTmall), "page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             if(!resp.data.defaultData){ //没有商品
                 $("#J-list").html('<li class="tip-no-sold"><p class="txt">暂无即将售罄宝贝，返回宝贝页面</p><p>页面虽不曾留下痕迹，但我知你已飞过</p></li>');
