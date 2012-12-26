@@ -7,7 +7,7 @@ Muzhi.Good = Backbone.Model.extend({
     stateMap: function (st) {
         var map = {
             "-1": ["sell-out",true],        //MZ_FINISHED 已结束
-            "3": ["obligation",false],       //MZ_ORDERED 待付款
+            "3": ["obligation",true],       //MZ_ORDERED 待付款
             "4": ["success",true],          //MZ_ORDER_SUCCESS  已成功抢购
             "5": ["close",false],            //MZ_ORDER_CANCEL 未付款，交易关闭
             "0": ["to-begin",false],         //MZ_WILL_START  即将开始
@@ -63,8 +63,6 @@ Muzhi.Good = Backbone.Model.extend({
 
         var inRegion = this.priceRegion();
 
-
-
         return {
             title: mzBase.title,
             pic: mzBase.pic,
@@ -78,8 +76,8 @@ Muzhi.Good = Backbone.Model.extend({
             btnClass: this.stateMap(mzBase.status),
             startTime: mzInfoPart.startTime ? mzInfoPart.startTime : false,  //即将开始的时候存在startTime字段
             region: inRegion,
-            allowRefresh: [3, 4, 5, 1, 2, 7].indexOf(parseInt(mzBase.status)) != -1 && mzCorePart.nowPrice != mzCorePart.minPrice,   //TODO:已经斗至最低的
-            detailUrl: mzBase.status == 2 ? "http://a.m.taobao.com/i"+mzBase.itemId+".htm" : "#" //立刻购买是跳转地址
+            detailUrl: mzBase.status == 2 ? "http://a.m.taobao.com/i"+mzBase.itemId+".htm" : (mzBase.status==3?"http://tm.m.taobao.com/list.htm?statusId=1":"#"), //立刻购买是跳转地址
+            allowRefresh: [3, 4, 1, 2, 7].indexOf(parseInt(mzBase.status)) != -1 && mzCorePart.nowPrice != mzCorePart.minPrice   //TODO:已经斗至最低的
         };
     }
 

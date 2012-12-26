@@ -30,7 +30,7 @@
            </header>
             <ul id="J-tab" class="tab-holder">
                 <li class="J-filter"><a href="#!list/0/p1" id="J-filterLink">宝贝<small>:全部</small><span class="arr"></span></a></li>
-                <li><a href="#!sold/p1" id="J-soldOut">即将售罄</a><em class="pop-num" id="J-soldNum"></em></li>
+                <li><a href="#!sold/p1" id="J-soldOut">即将售罄</a><em class="pop-num" id="J-soldNum" style="display:none"></em></li>
                 <li><a href="#!my/p1" id="J-My">我的斗价</a><em class="pop-num" id="J-myNum" style="display:none;"></em></li>
             </ul>
             <div class="drop-list" id="J-catSel">
@@ -62,18 +62,19 @@
     </div>
 
 
-    <footer id="J_footer" class="footer ">
+    <footer class="footer">
         <section class="footer-t">
             <p class="user-info">
-                <span><a href="http://login.waptest.taobao.com/login.htm?pds=login%23h&amp;tpl_redirect_url=http%3A%2F%2F127.0.0.1%3A8080%2Fmz%2Findex.htm%3F">登录</a></span><span><a href="http://u.waptest.taobao.com/reg/newUser.htm?pds=reg%23h">注册</a></span>
+                <span><a href="#">用户名1</a></span><span><a href="#">退出</a></span>
             </p>
-            <p class="gotop"><a id="J_GoTop" href="javascript:scroll(0,0)">top<b> </b></a></p>
+            <p class="gotop"><a id="J_GoTop" href="#">top<b></b></a></p>
         </section>
         <nav class="footer-l">
-            <a href="http://waptest.taobao.com/?v=1&amp;pds=stedition%23h" title="">标准版</a><a href="http://www.taobao.com/index.php?from=wap&amp;pds=pcedition%23h&amp;sprefer=pmm302" title="">电脑版</a>
+            <a href="#" title="">标准版</a><a href="http://www.taobao.com/index.php?from=wap&sprefer=pmm302" title="">电脑版</a>
         </nav>
-        <p class="copyright">©2012 浙B2-20080224<a class="cr-sv J_dps" href="#" id="J_service" data-dps="service%23h">客服</a></p>
+        <p class="copyright">©2012 浙B2-20080224<a class="cr-sv" href="#" id="J_service">客服</a></p>
     </footer>
+
 </div>
 <input type="hidden" id="J_app_key" value="12574478" />
 <script type="template" id="J-itemTemplate">
