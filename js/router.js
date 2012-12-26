@@ -102,6 +102,7 @@ Muzhi.Router = Backbone.Router.extend({
     sold: function (pageNo) {
         var self = this;
         self._hideNav();
+        $("#J-list").html('<div class="loading"><span></span></div>');
         var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": "0", "page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             if(!resp.data.defaultData){ //没有商品
@@ -119,6 +120,7 @@ Muzhi.Router = Backbone.Router.extend({
     my: function (pageNo) {
         var self = this;
         self._hideNav();
+        $("#J-list").html('<div class="loading"><span></span></div>');
         var url = {api:"mtop.mz.getMyMzList",data:{"page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
         	if(!Muzhi.Util._checkLogin(resp)) return;
