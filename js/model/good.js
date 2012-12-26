@@ -63,7 +63,7 @@ Muzhi.Good = Backbone.Model.extend({
 
         var inRegion = this.priceRegion();
 
-
+		var tipsRegion = this.tipsRegion(inRegion);
 
         return {
             title: mzBase.title,
