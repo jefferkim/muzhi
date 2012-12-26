@@ -61,11 +61,14 @@ Muzhi.goodItemView = Backbone.View.extend({
 
         var pos = this.$el.find(".current-pos"),
             tip = this.$el.find(".dynamic"),
+            desc = this.$el.find(".desc"),
             arrow = tip.find("s");
 
         if(oldRegion != newRegion){ //有区间变动，需要加入css动画
             tip.find(".current-price").text("￥"+data.mzCorePart.nowPrice);
             tip.find("em").text(data.mzCorePart.numOfJoiners+"人斗价");
+            desc.text(data.mzInfoPart.desc);
+            console.log(data.mzInfoPart.desc);
             pos.animate({
                 top:  posTransformArray[newRegion]
             },500,'line');

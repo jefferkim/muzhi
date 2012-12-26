@@ -9,8 +9,7 @@ Muzhi.Router = Backbone.Router.extend({
         '!list/:id/p:pageNo': "list", //列表
         '!page/-p:pageNo':"listAll",//
         '!sold/p:pageNo': "sold",//售罄
-        '!my/p:pageNo': "my",//我的斗价
-        '!my':"my"//
+        '!my/p:pageNo': "my"//我的斗价
     },
     //TODO:代付款
 
