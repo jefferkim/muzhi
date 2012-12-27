@@ -83,7 +83,7 @@ Muzhi.Router = Backbone.Router.extend({
             Muzhi.Util.setCurrentMenu(listId);
 
         $("#J-list").html('<div class="loading"><span></span></div>');
-
+		$("#J-pageNav").html('');
         var isTmall = $("#J_isTmall").val() == "true" ? 1 :0;
         var url = {api:"mtop.mz.getMzList", data:{"b2c":isTmall, "cc": listId||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
 
@@ -111,6 +111,7 @@ Muzhi.Router = Backbone.Router.extend({
         var self = this;
         self._hideNav();
         $("#J-list").html('<div class="loading"><span></span></div>');
+        $("#J-pageNav").html('');
         var isTmall = $("#J_isTmall").val() == "true" ? 1 :0;
         var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": isTmall, "page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
@@ -130,6 +131,7 @@ Muzhi.Router = Backbone.Router.extend({
         var self = this;
         self._hideNav();
         $("#J-list").html('<div class="loading"><span></span></div>');
+        $("#J-pageNav").html('');
         var url = {api:"mtop.mz.getMyMzList",data:{"page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
         	if(!Muzhi.Util._checkLogin(resp)) return;
