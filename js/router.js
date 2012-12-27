@@ -75,7 +75,7 @@ Muzhi.Router = Backbone.Router.extend({
         if(listId == 0 && pageNo == 1)
             sliderWrap.show();
         else
-            sliderWrap.hide();
+            sliderWrap.hide(); $("#J-catSel").addClass("none"); $("#J-filterLink").find(".arr").addClass("up");
 
         if (!Muzhi.menuList)
             Muzhi.Util.getMenu();
