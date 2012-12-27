@@ -14,7 +14,7 @@ Muzhi.Good = Backbone.Model.extend({
             "1": ["J-join",true],             //MZ_WAIT_JOIN  参与斗价
             "2": ["buy",true],              //MZ_BUYNOW    立即购买
             "6": ["sell-out",false],         // MZ_SOLDOUT  卖光了
-            "7": ["chance",true]            //MZ_CHANCE   还有机会
+            "7": ["chance",false]            //MZ_CHANCE   还有机会
         };
         return map[st];
     },
