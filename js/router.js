@@ -16,6 +16,15 @@ Muzhi.Router = Backbone.Router.extend({
     initialize: function () {
         var self = this;
 
+        var bulletsH = "",len = $("li","#J-slider").length;
+        for(var i = 0; i<len ;i++){
+            if(i==0){
+              bulletsH += '<em class="on"></em>';
+            }else{
+               bulletsH += '<em></em>';
+            }
+        }
+        $("#J-position").html(bulletsH);
         var slider = new Swipe($('#J-slider')[0],{
              //auto:3000,
             callback: function(e,pos) {
