@@ -52,6 +52,7 @@ Muzhi.Good = Backbone.Model.extend({
                 inRegion = i;
             }
         }
+
         return inRegion;
     },
 
