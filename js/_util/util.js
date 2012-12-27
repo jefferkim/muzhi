@@ -24,10 +24,19 @@ Muzhi.Util = {
         $("a",".J-filter").attr("href","#!list/"+id+"/p1")
     },
 
-    _checkLogin:function(resp){
+    _checkLogin:function(resp,id,isCanpai){
         if (resp.data.success == "false" && resp.data.errorCode == "PP_USER_NOT_LOGIN") {
-            var currentUrl = encodeURIComponent(location.href.split("#")[0]),
+            var currentUrl,
                 host = location.hostname.match(/$|\.(?:m|waptest|wapa)\.taobao\.com/gi);
+            if(id){
+                var isTmall = $("#J_isTmall").val() == "true";
+                var isTmallParam = isTmall ? "?mz_key=1":"";
+                var isCanpaiParam = (isCanpai ? (isTmall ? "&":"?")+"func=dxp":"");
+                currentUrl = "http://a.m.taobao.com/i"+id+".htm"+isTmallParam+isCanpaiParam;
+            }else{
+                currentUrl = encodeURIComponent(location.href.split("#")[0]);
+            }
+
             if(location.href.indexOf("localhost") != -1){
                 host[0] = ".waptest.taobao.com";
             }
@@ -59,13 +68,13 @@ Muzhi.Util = {
         
         $("#J-filterLink").on("click",function(e){
             e.preventDefault();
-            $("#J-catSel").toggle();
+            $("#J-catSel").toggleClass("none");
             $(this).find('.arr').toggleClass("up");
         });
         
         $("#J-catList").on("click","a",function(e){
             e.preventDefault();
-            $("#J-catSel").hide();
+            $("#J-catSel").addClass("none");
             var hashToGo = $(this).attr("href");
             $("a",".J-filter").attr("href",hashToGo);
             $(".arr",".J-filter").removeClass("up");

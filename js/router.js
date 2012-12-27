@@ -40,7 +40,7 @@ Muzhi.Router = Backbone.Router.extend({
     },
 
     _listRender: function (resp) {
-        if(!Muzhi.Util._checkLogin(resp)) return;
+        if(!Muzhi.Util._checkLogin(resp)) return;//TODO:貌似不需要
 
         if(resp.data.success == "false"){
             notification.flash(resp.data.errorMsg).show();
@@ -69,7 +69,14 @@ Muzhi.Router = Backbone.Router.extend({
 
     _queryList:function(listId,pageNo){
         var self = this;
+        var sliderWrap = $("#J-sliderWrap");
         self._showNav();
+        //只有在全部分类并且是第一页时才会显示slider
+        if(listId == 0 && pageNo == 1)
+            sliderWrap.show();
+        else
+            sliderWrap.hide();
+
         if (!Muzhi.menuList)
             Muzhi.Util.getMenu();
         else
@@ -77,8 +84,8 @@ Muzhi.Router = Backbone.Router.extend({
 
         $("#J-list").html('<div class="loading"><span></span></div>');
 
-
-        var url = {api:"mtop.mz.getMzList", data:{"b2c":Number(MZCONFIG.isTmall), "cc": listId||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
+        var isTmall = $("#J_isTmall").val() == "true" ? 1 :0;
+        var url = {api:"mtop.mz.getMzList", data:{"b2c":isTmall, "cc": listId||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
 
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
 
@@ -93,7 +100,7 @@ Muzhi.Router = Backbone.Router.extend({
     },
 
     listDefault:function(){
-         this._queryList(0);
+         this._queryList(0,1);
     },
     //获取全部列表
     listAll:function(pageNo){
@@ -104,7 +111,8 @@ Muzhi.Router = Backbone.Router.extend({
         var self = this;
         self._hideNav();
         $("#J-list").html('<div class="loading"><span></span></div>');
-        var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": Number(MZCONFIG.isTmall), "page": pageNo || 1, "pagesize": "12"}};
+        var isTmall = $("#J_isTmall").val() == "true" ? 1 :0;
+        var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": isTmall, "page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             if(!resp.data.defaultData){ //没有商品
                 $("#J-list").html('<li class="tip-no-sold"><p class="txt">暂无即将售罄宝贝，返回宝贝页面</p><p>页面虽不曾留下痕迹，但我知你已飞过</p></li>');
@@ -141,18 +149,15 @@ Muzhi.Router = Backbone.Router.extend({
     _hideNav: function(){
     	$("#J-filterLink").find("small").hide();
     	$("#J-filterLink").find(".arr").hide();
-    	$("#J-catSel").hide();
+    	$("#J-catSel").addClass("none");
     	$("#J-sliderWrap").hide();
-        //$("#J-filterLink").find('.arr').addClass('up');
     },
     
     // hide:显示频道导航
     _showNav: function(){
     	$("#J-filterLink").find("small").show();
     	$("#J-filterLink").find(".arr").show();
-    	$("#J-catSel").show();
     	$("#J-sliderWrap").show();
-        //$("#J-filterLink").find('.arr').addClass('up');
     }
     
 });

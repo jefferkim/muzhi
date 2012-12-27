@@ -24,7 +24,7 @@ Muzhi.goodItemView = Backbone.View.extend({
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             if(!Muzhi.Util._checkLogin(resp)) return;
             if(resp.data.success == "false"){
-                notification.falsh(resp.data.errorMsg);
+                notification.flash(resp.data.errorMsg);
                 return ;
             }
             var currentMyNum = $("#J-myNum");
