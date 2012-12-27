@@ -92,7 +92,8 @@ Muzhi.Router = Backbone.Router.extend({
             Muzhi.Util.setCurrentMenu(listId);
 
         $("#J-list").html('<div class="loading"><span></span></div>');
-
+		$("#J-pageNav").html('');
+		$("#J-filterLink").addClass('cur');
         var isTmall = $("#J_isTmall").val() == "true" ? 1 :0;
         var url = {api:"mtop.mz.getMzList", data:{"b2c":isTmall, "cc": listId||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
 
@@ -120,12 +121,13 @@ Muzhi.Router = Backbone.Router.extend({
         var self = this;
         self._hideNav();
         $("#J-list").html('<div class="loading"><span></span></div>');
+        $("#J-pageNav").html('');
+        $("#J-soldOut").addClass('cur');
         var isTmall = $("#J_isTmall").val() == "true" ? 1 :0;
         var url = {api:"mtop.mz.getMzBarelyList",data:{"b2c": isTmall, "page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             if(!resp.data.defaultData){ //没有商品
                 $("#J-list").html('<li class="tip-no-sold"><p class="txt">暂无即将售罄宝贝，返回宝贝页面</p><p>页面虽不曾留下痕迹，但我知你已飞过</p></li>');
-                $("#J-pageNav").html('');
                 $("#J-soldNum").hide();
                 return;
             }
@@ -139,12 +141,13 @@ Muzhi.Router = Backbone.Router.extend({
         var self = this;
         self._hideNav();
         $("#J-list").html('<div class="loading"><span></span></div>');
+        $("#J-pageNav").html('');
+        $("#J-My").addClass('cur');
         var url = {api:"mtop.mz.getMyMzList",data:{"page": pageNo || 1, "pagesize": "12"}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
         	if(!Muzhi.Util._checkLogin(resp)) return;
             if(!resp.data.defaultData){ //没有商品
                 $("#J-list").html('<li class="tip-no-dj"><div class="icon"></div><p class="txt">还未参与斗价，快去斗个宝贝吧！</p><p>给你一张画布，绘一个缤纷世界</p></li>');
-                $("#J-pageNav").html('');
                 return;
             }
             var myNum = $("#J-myNum"),data = resp.data.defaultData;
