@@ -77,7 +77,7 @@ Muzhi.Good = Backbone.Model.extend({
             startTime: mzInfoPart.startTime ? mzInfoPart.startTime : false,  //即将开始的时候存在startTime字段
             region: inRegion,
             detailUrl: mzBase.status == 2 ? "http://a.m.taobao.com/i"+mzBase.itemId+".htm" : (mzBase.status==3?"http://tm.m.taobao.com/list.htm?statusId=0":"#"), //立刻购买是跳转地址
-            allowRefresh: [3, 4, 1, 2, 7].indexOf(parseInt(mzBase.status)) != -1 && mzCorePart.nowPrice != mzCorePart.minPrice   //TODO:已经斗至最低的
+            allowRefresh: ([3, 4, 1, 2].indexOf(parseInt(mzBase.status)) != -1 && mzCorePart.nowPrice != mzCorePart.minPrice) || parseInt(mzBase.status) ==7   //TODO:已经斗至最低的
         };
     }
 
