@@ -76,7 +76,7 @@ Muzhi.Good = Backbone.Model.extend({
         return {
             title: mzBase.title,
             pic: mzBase.pic,
-            link: getDetailUrl(mzBase.itemId),
+            link: this.getDetailUrl(mzBase.itemId),
             desc: mzInfoPart.desc,
             btnTxt: mzClick.showName, //按钮显示文案
             maxPrice: mzCorePart.maxPrice,
