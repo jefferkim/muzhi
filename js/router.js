@@ -2,6 +2,7 @@
 Muzhi.Goods = new Muzhi.goodList;
 
 //begin router
+//TODO:菜单渲染将全部有模板来渲染，减少dom的反复修改样式等等
 Muzhi.Router = Backbone.Router.extend({
 
     routes: {

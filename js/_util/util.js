@@ -6,6 +6,10 @@ Muzhi.Util = {
 
         var url = {api:"mtop.mz.getMzNav",data:{}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+            if(!resp.data.defaultData){
+                $("#J-catList").addClass("none");
+                return;
+            }
             var menuList = Muzhi.menuList = resp.data.defaultData.navItems;
             $("#J-catList").html(_.template(liTpl, {navItems: menuList}));
             var isList = location.hash.match(/!list\/(\d)/);
@@ -68,6 +72,7 @@ Muzhi.Util = {
         
         $("#J-filterLink").on("click",function(e){
             e.preventDefault();
+            if(!Muzhi.menuList) return;
             $("#J-catSel").toggleClass("none");
             $(this).find('.arr').toggleClass("up");
         });

@@ -30,7 +30,7 @@ function ontouchend(e) {
 
     setTimeout(function () {
         var className = el.className;
-        el.className = className.replace(' c-linkfocus-active', '');
+        el.className = className.replace(/c\-linkfocus\-active/g, '');
         removeEvent(el);
     }, 200);
 }
