@@ -58,6 +58,12 @@ Muzhi.Good = Backbone.Model.extend({
 
         return inRegion;
     },
+    
+    getDetailUrl:function(itemId){
+    	var sys=Muzhi.uriSysType;
+    	var mzKey=$('#J_isTmall').value=='true'?'?mz_key=1':'';
+    	return "http://a."+sys+".taobao.com/i"+itemId+".htm"+mzKey;
+    },
 
     getItemInfo: function () {
         var mzBase = this.get("mzBasePart"),
@@ -70,7 +76,7 @@ Muzhi.Good = Backbone.Model.extend({
         return {
             title: mzBase.title,
             pic: mzBase.pic,
-            link: "http://a.m.taobao.com/i"+mzBase.itemId+".htm",
+            link: this.getDetailUrl(mzBase.itemId),
             desc: mzInfoPart.desc,
             btnTxt: mzClick.showName, //按钮显示文案
             maxPrice: mzCorePart.maxPrice,
