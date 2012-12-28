@@ -165,7 +165,7 @@ function h5_base() {
 function _checkSysType() {
     var _checkSysType = 'wapa';
     if (window.location.host == 'localhost' || window.location.host.match('.*\\waptest\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
-        _checkSysType = 'wapa';
+        _checkSysType = 'waptest';
     } else if (window.location.host.match('.*\\wapa\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
         _checkSysType = 'wapa';
     }
@@ -873,3 +873,4 @@ function mtop_h5() {
 }
 
 Muzhi.mtopH5 = mtop_h5();
+Muzhi.uriSysType = _checkSysType();
