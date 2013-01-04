@@ -36,7 +36,7 @@ Muzhi.Util = {
                 var isTmall = $("#J_isTmall").val() == "true";
                 var isTmallParam = isTmall ? "?mz_key=1":"";
                 var isCanpaiParam = (isCanpai ? (isTmall ? "&":"?")+"func=dxp":"");
-                currentUrl = "http://a.m.taobao.com/i"+id+".htm"+isTmallParam+isCanpaiParam;
+                currentUrl = "http://a." + Muzhi.uriSysType + ".taobao.com/i"+id+".htm"+isTmallParam+isCanpaiParam;
             }else{
                 currentUrl = encodeURIComponent(location.href.split("#")[0]);
             }
