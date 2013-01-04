@@ -18,11 +18,8 @@ Muzhi.goodItemView = Backbone.View.extend({
     join: function (e) {
         e.preventDefault();
         var currentModel = this.model;
-<<<<<<< HEAD
         var itemId = currentModel.get("mzBasePart").itemId;
-=======
-        var itemId =  currentModel.get("mzBasePart").itemId;
->>>>>>> d887be82df6597a79cbd5f929a8d25c8bed6ffb0
+
         var successTpl = '<div class="join-tip"><em class="cz"></em><b>斗价成功</b>您可以立即购买,也可以继续等待</div>';
 
         var url = {api:"mtop.mz.doJoinMz",data:{"itemId": itemId}};
