@@ -56,10 +56,10 @@ Muzhi.Good = Backbone.Model.extend({
              inRegion ++;
         }
 
-        if(inRegion ==0 && (nowPrice > nowPrice)){
+        if(inRegion ==0 && (nowPrice > minPrice)){
             return 1;
         }
-        
+
         if (inRegion == 5 && (nowPrice < maxPrice)) {
             return 4;
         }
