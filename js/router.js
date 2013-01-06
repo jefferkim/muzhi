@@ -16,7 +16,6 @@ Muzhi.Router = Backbone.Router.extend({
 
     initialize: function () {
         var self = this;
-
         var bulletsH = "",len = $("li","#J-slider").length;
         for(var i = 0; i<len ;i++){
             if(i==0){
@@ -87,10 +86,13 @@ Muzhi.Router = Backbone.Router.extend({
         else
             sliderWrap.hide(); $("#J-catSel").addClass("none"); $("#J-filterLink").find(".arr").addClass("up");
 
+
         if (!Muzhi.menuList)
             Muzhi.Util.getMenu();
         else
             Muzhi.Util.setCurrentMenu(listId);
+
+
 
         $("#J-list").html('<div class="loading"><span></span></div>');
 		$("#J-pageNav").html('');

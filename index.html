@@ -28,11 +28,13 @@
                 </section>
             </div>
            </header>
-            <ul id="J-tab" class="tab-holder">
+           <div class="tab-wrap">
+             <ul id="J-tab" class="tab-holder">
                 <li class="J-filter"><a href="#!list/0/p1" id="J-filterLink">宝贝<small>:全部</small><span class="arr"></span></a></li>
                 <li><a href="#!sold/p1" id="J-soldOut">即将售罄</a><em class="pop-num" id="J-soldNum" style="display:none"></em></li>
                 <li><a href="#!my/p1" id="J-My">我的斗价</a><em class="pop-num" id="J-myNum" style="display:none;"></em></li>
-            </ul>
+             </ul>
+           </div>
             <div class="drop-list" id="J-catSel">
                 <b></b>
                 <ul class="category" id="J-catList">
@@ -90,12 +92,12 @@
                 <%if(startTime){%><span class="start-time"><s></s><%= startTime%>开抢</span><%}%>
             </div>
             <div class="J-priceBar price-section">
-                <span class="origin-price">￥<%= maxPrice%></span>
-                <span class="lowest-price">￥<%= minPrice%></span>
+                <span class="origin-price">&yen;<%= maxPrice%></span>
+                <span class="lowest-price">&yen;<%= minPrice%></span>
                 <div class="price-bar"><span class="current-pos region<%= region%>"></span></div>
                 <div class="dynamic t-region<%= region%>">
                     <s class="a-region<%= region%>"></s>
-                    <b class="current-price">￥<%= currentPrice %></b>
+                    <b class="current-price">&yen;<%= currentPrice %></b>
                     <%if(numOfJoiners){%><em><%= numOfJoiners%>人斗价</em><%}%>
                 </div>
             </div>
@@ -113,7 +115,7 @@
 </script>
 <input type="hidden" id="J_isTmall" value="false" />
 
-<script type="text/javascript" src="http://127.0.0.1:9292/muzhi.js"> </script>
+<script type="text/javascript" src="http://10.13.125.92:9292/muzhi.js"> </script>
 <script type="text/javascript">
     application.init();
 </script>

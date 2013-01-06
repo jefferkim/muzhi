@@ -13,6 +13,11 @@ a{
 #tbh5v0{
   overflow:hidden;
 }
+.tab-wrap{
+  width:320px;
+  height:45px;
+  overflow: hidden;
+}
 .none{
   display:none;
 }
@@ -134,7 +139,7 @@ a{
     vertical-align:top;
     width:16px;
     height:16px;
-    line-height:16px;
+    line-height:17px;
     margin-top:3px;
     margin-left:3px;
     color:#ffffff;
@@ -271,14 +276,15 @@ a{
     h3{
       width:286px;
       height:36px;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       a{
         font-size:16px;
         font-weight:normal;
         color:#333333;
-        line-height:36px;
+        line-height:34px;
+        overflow:hidden;
+        display:block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
 
@@ -391,6 +397,7 @@ a{
         left:22px;
         font-size:11px;
         color:#666666;
+        font-family:Arial;
       }
       .origin-price{
         top:6px;
@@ -407,6 +414,7 @@ a{
          -webkit-border-radius:2px;
          border-radius:2px;
          background:#ffedaf;
+         padding:5px 0;
          s{
            position:absolute;
            left:-4px;
@@ -421,17 +429,14 @@ a{
          }
          .current-price{
            display:block;
-           height:16px;
-           padding:2px 0;
-           line-height:16px;
            font-size:12px;
            color:#e30000;
            text-align:center;
+           font-family:Arial;
          }
          em{
            display:block;
-           height:20px;
-           line-height:18px;
+           margin-top:1px;
            color:#666666;
            font-size:11px;
            text-align:center;
