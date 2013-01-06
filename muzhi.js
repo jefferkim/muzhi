@@ -3861,7 +3861,7 @@ function h5_base() {
 
 /*======== config=======*/
 function _checkSysType() {
-    var _checkSysType = 'wapa';
+    var _checkSysType = 'm';
     if (window.location.host == 'localhost' || window.location.host.match('.*\\waptest\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
         _checkSysType = 'waptest';
     } else if (window.location.host.match('.*\\wapa\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
@@ -4610,7 +4610,7 @@ Muzhi.Util = {
                 var isTmall = $("#J_isTmall").val() == "true";
                 var isTmallParam = isTmall ? "?mz_key=1":"";
                 var isCanpaiParam = (isCanpai ? (isTmall ? "&":"?")+"func=dxp":"");
-                currentUrl = "http://a.m.taobao.com/i"+id+".htm"+isTmallParam+isCanpaiParam;
+                currentUrl = "http://a." + Muzhi.uriSysType + ".taobao.com/i"+id+".htm"+isTmallParam+isCanpaiParam;
             }else{
                 currentUrl = encodeURIComponent(location.href.split("#")[0]);
             }
@@ -4703,26 +4703,25 @@ Muzhi.Good = Backbone.Model.extend({
     },
 
 
-    //TODO:后期加入四舍五入的方式，但是会和现有想要实现的方案冲突，考虑到浮点数运算的很多问题，整数运算更能完成现有的交互逻辑
-    priceRegion: function () {
+    calculateTop:function(){
 
         var mzCorePart = this.get("mzCorePart"),
-            nowPrice = parseInt(mzCorePart.nowPrice || mzCorePart.maxPrice),  //即将开始时不提供当前值
-            maxPrice = parseInt(mzCorePart.maxPrice),
-            minPrice = parseInt(mzCorePart.minPrice),
-            region = this.toFixed((maxPrice - minPrice) / 5, 2),
-            inRegion = 0;
-        for (var i = 0; i < 6; i++) {
-            if (nowPrice >= (minPrice + region * i) && nowPrice <= (minPrice + region * (i + 1))) {
-                inRegion = i;
-            }
-        }
-        if(inRegion > 0 && inRegion < 5){
-             inRegion ++;
-        }
+            nowPrice = mzCorePart.nowPrice || mzCorePart.maxPrice,  //即将开始时不提供当前值
+            maxPrice = mzCorePart.maxPrice,
+            minPrice = mzCorePart.minPrice,
+            indicatorOffset,infoboxOffset;
 
-        return inRegion;
+        if (minPrice == nowPrice) {
+            indicatorOffset = 110;
+            infoboxOffset = 85;
+        } else {
+            indicatorOffset = Math.min(85, 15+70*(maxPrice-nowPrice)/(maxPrice-minPrice));
+            infoboxOffset = Math.min(66, 18+48*(maxPrice-nowPrice)/(maxPrice-minPrice));
+        }
+        return [indicatorOffset,infoboxOffset];
     },
+
+
     
     getDetailUrl:function(itemId){
     	var sys=Muzhi.uriSysType;
@@ -4736,7 +4735,7 @@ Muzhi.Good = Backbone.Model.extend({
             mzCorePart = this.get("mzCorePart"),
             mzInfoPart = this.get("mzInfoPart");
 
-        var inRegion = this.priceRegion();
+        var inRegion = this.calculateTop();
 
         return {
             title: mzBase.title,
@@ -4776,9 +4775,9 @@ Muzhi.goodItemView = Backbone.View.extend({
     className: "list-item",
 
     events: {
-        "click .J-refresh": "refreshPrice",
-        "click .J-join": "join",
-        "tap .dynamic": "refreshPrice"
+       "click .J-refresh": "refreshPrice",
+       "click .J-join": "join",
+       "tap .dynamic": "refreshPrice"
     },
 
     initialize: function () {
@@ -4790,6 +4789,7 @@ Muzhi.goodItemView = Backbone.View.extend({
         e.preventDefault();
         var currentModel = this.model;
         var itemId = currentModel.get("mzBasePart").itemId;
+
         var successTpl = '<div class="join-tip"><em class="cz"></em><b>斗价成功</b>您可以立即购买,也可以继续等待</div>';
 
         var url = {api:"mtop.mz.doJoinMz",data:{"itemId": itemId}};
@@ -4824,35 +4824,34 @@ Muzhi.goodItemView = Backbone.View.extend({
     },
 
     refreshRender:function(data){
-        var oldRegion = this.model.priceRegion(),
-            newRegion = this.model.set(data).priceRegion();
-
-        var posTransformArray = [110,92,69,46,23,3], //pos的运动位置
-            tipTransformArray = [85,65,57,35,20,0], //tip的运动位置
-            arrowTransformArray = [28,29,15,15,7,7];//小箭头的位置,最主要小箭头的位置
 
         var pos = this.$el.find(".current-pos"),
             tip = this.$el.find(".dynamic"),
-            desc = this.$el.find(".desc"),
-            arrow = tip.find("s");
+            desc = this.$el.find(".desc");
 
-        if(oldRegion != newRegion){ //有区间变动，需要加入css动画
-            tip.find(".current-price").text("￥"+data.mzCorePart.nowPrice);
-            tip.find("em").text(data.mzCorePart.numOfJoiners+"人斗价");
-            desc.text(data.mzInfoPart.desc);
-            console.log(data.mzInfoPart.desc);
-            pos.animate({
-                top:  posTransformArray[newRegion]
-            },500,'line');
 
-            tip.animate({
-                top: tipTransformArray[newRegion]
-            },500,'line');
+        var maxP = data.mzCorePart.maxPrice,
+            nowP = data.mzCorePart.nowPrice,
+            minP = data.mzCorePart.minPrice,
+            indicatorOffset,infoboxOffset;
 
-            arrow.css({top:arrowTransformArray[newRegion]});
-        }else{
-            this.render();
+        if (minP == nowP) {
+            indicatorOffset = 110;
+            infoboxOffset = 85;
+        } else {
+            indicatorOffset = Math.min(85, 15+70*(maxP-nowP)/(maxP-minP));
+            infoboxOffset = Math.min(66, 18+48*(maxP-nowP)/(maxP-minP));
         }
+        tip.find(".current-price").html("&yen;"+data.mzCorePart.nowPrice);
+        tip.find("em").text(data.mzCorePart.numOfJoiners+"人斗价");
+        desc.text(data.mzInfoPart.desc);
+        pos.animate({
+            top:  indicatorOffset
+        },500);
+
+        tip.animate({
+            top: infoboxOffset
+        },500);
     },
 
     render: function () {
@@ -4899,7 +4898,6 @@ Muzhi.Router = Backbone.Router.extend({
 
     initialize: function () {
         var self = this;
-
         var bulletsH = "",len = $("li","#J-slider").length;
         for(var i = 0; i<len ;i++){
             if(i==0){
@@ -4970,10 +4968,13 @@ Muzhi.Router = Backbone.Router.extend({
         else
             sliderWrap.hide(); $("#J-catSel").addClass("none"); $("#J-filterLink").find(".arr").addClass("up");
 
+
         if (!Muzhi.menuList)
             Muzhi.Util.getMenu();
         else
             Muzhi.Util.setCurrentMenu(listId);
+
+
 
         $("#J-list").html('<div class="loading"><span></span></div>');
 		$("#J-pageNav").html('');
