@@ -54,35 +54,34 @@ Muzhi.goodItemView = Backbone.View.extend({
     },
 
     refreshRender:function(data){
-        var oldRegion = this.model.priceRegion(),
-            newRegion = this.model.set(data).priceRegion();
-
-        var posTransformArray = [110,92,69,46,23,3], //pos的运动位置
-            tipTransformArray = [85,65,57,35,20,0], //tip的运动位置
-            arrowTransformArray = [28,29,15,15,7,7];//小箭头的位置,最主要小箭头的位置
 
         var pos = this.$el.find(".current-pos"),
             tip = this.$el.find(".dynamic"),
-            desc = this.$el.find(".desc"),
-            arrow = tip.find("s");
+            desc = this.$el.find(".desc");
 
-        if(oldRegion != newRegion){ //有区间变动，需要加入css动画
-            tip.find(".current-price").text("￥"+data.mzCorePart.nowPrice);
-            tip.find("em").text(data.mzCorePart.numOfJoiners+"人斗价");
-            desc.text(data.mzInfoPart.desc);
-            console.log(data.mzInfoPart.desc);
-            pos.animate({
-                top:  posTransformArray[newRegion]
-            },500,'line');
 
-            tip.animate({
-                top: tipTransformArray[newRegion]
-            },500,'line');
+        var maxP = data.mzCorePart.maxPrice,
+            nowP = data.mzCorePart.nowPrice,
+            minP = data.mzCorePart.minPrice,
+            indicatorOffset,infoboxOffset;
 
-            arrow.css({top:arrowTransformArray[newRegion]});
-        }else{
-            this.render();
+        if (minP == nowP) {
+            indicatorOffset = 110;
+            infoboxOffset = 85;
+        } else {
+            indicatorOffset = Math.min(85, 15+70*(maxP-nowP)/(maxP-minP));
+            infoboxOffset = Math.min(66, 18+48*(maxP-nowP)/(maxP-minP));
         }
+        tip.find(".current-price").html("&yen;"+data.mzCorePart.nowPrice);
+        tip.find("em").text(data.mzCorePart.numOfJoiners+"人斗价");
+        desc.text(data.mzInfoPart.desc);
+        pos.animate({
+            top:  indicatorOffset
+        },500);
+
+        tip.animate({
+            top: infoboxOffset
+        },500);
     },
 
     render: function () {

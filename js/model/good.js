@@ -38,34 +38,25 @@ Muzhi.Good = Backbone.Model.extend({
     },
 
 
-    //TODO:后期加入四舍五入的方式，但是会和现有想要实现的方案冲突，考虑到浮点数运算的很多问题，整数运算更能完成现有的交互逻辑
-    priceRegion: function () {
+    calculateTop:function(){
 
         var mzCorePart = this.get("mzCorePart"),
-            nowPrice = parseInt(mzCorePart.nowPrice || mzCorePart.maxPrice),  //即将开始时不提供当前值
-            maxPrice = parseInt(mzCorePart.maxPrice),
-            minPrice = parseInt(mzCorePart.minPrice),
-            region = this.toFixed((maxPrice - minPrice) / 5, 2),
-            inRegion = 0;
-        for (var i = 0; i < 6; i++) {
-            if (nowPrice >= (minPrice + region * i) && nowPrice <= (minPrice + region * (i + 1))) {
-                inRegion = i;
-            }
-        }
-        if(inRegion > 0 && inRegion < 5){
-             inRegion ++;
-        }
+            nowPrice = mzCorePart.nowPrice || mzCorePart.maxPrice,  //即将开始时不提供当前值
+            maxPrice = mzCorePart.maxPrice,
+            minPrice = mzCorePart.minPrice,
+            indicatorOffset,infoboxOffset;
 
-        if(inRegion ==0 && (nowPrice > minPrice)){
-            return 1;
+        if (minPrice == nowPrice) {
+            indicatorOffset = 110;
+            infoboxOffset = 85;
+        } else {
+            indicatorOffset = Math.min(85, 15+70*(maxPrice-nowPrice)/(maxPrice-minPrice));
+            infoboxOffset = Math.min(66, 18+48*(maxPrice-nowPrice)/(maxPrice-minPrice));
         }
-
-        if (inRegion == 5 && (nowPrice < maxPrice)) {
-            return 4;
-        }
-
-        return inRegion;
+        return [indicatorOffset,infoboxOffset];
     },
+
+
     
     getDetailUrl:function(itemId){
     	var sys=Muzhi.uriSysType;
@@ -79,7 +70,7 @@ Muzhi.Good = Backbone.Model.extend({
             mzCorePart = this.get("mzCorePart"),
             mzInfoPart = this.get("mzInfoPart");
 
-        var inRegion = this.priceRegion();
+        var inRegion = this.calculateTop();
 
         return {
             title: mzBase.title,

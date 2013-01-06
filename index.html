@@ -94,9 +94,8 @@
             <div class="J-priceBar price-section">
                 <span class="origin-price">&yen;<%= maxPrice%></span>
                 <span class="lowest-price">&yen;<%= minPrice%></span>
-                <div class="price-bar"><span class="current-pos region<%= region%>"></span></div>
-                <div class="dynamic t-region<%= region%>">
-                    <s class="a-region<%= region%>"></s>
+                <div class="price-bar"><span class="current-pos" style="top:<%= region[0]%>px"><s></s></span></div>
+                <div class="dynamic" style="top:<%= region[1]%>px">
                     <b class="current-price">&yen;<%= currentPrice %></b>
                     <%if(numOfJoiners){%><em><%= numOfJoiners%>人斗价</em><%}%>
                 </div>
