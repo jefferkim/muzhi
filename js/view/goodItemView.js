@@ -18,11 +18,13 @@ Muzhi.goodItemView = Backbone.View.extend({
     join: function (e) {
         e.preventDefault();
         var currentModel = this.model;
+        var itemId = currentModel.get("mzBasePart").itemId;
+
         var successTpl = '<div class="join-tip"><em class="cz"></em><b>斗价成功</b>您可以立即购买,也可以继续等待</div>';
 
-        var url = {api:"mtop.mz.doJoinMz",data:{"itemId": currentModel.get("mzBasePart").itemId}}
+        var url = {api:"mtop.mz.doJoinMz",data:{"itemId": itemId}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
-            if(!Muzhi.Util._checkLogin(resp)) return;
+            if(!Muzhi.Util._checkLogin(resp,itemId,true)) return;
             if(resp.data.success == "false"){
                 notification.flash(resp.data.errorMsg);
                 return ;
