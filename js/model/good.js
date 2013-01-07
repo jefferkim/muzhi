@@ -64,7 +64,7 @@ Muzhi.Good = Backbone.Model.extend({
     
     getDetailUrl:function(itemId){
     	var sys=Muzhi.uriSysType;
-    	var mzKey=$('#J_isTmall').value=='true'?'?mz_key=1':'';
+    	var mzKey= $('#J_isTmall').val() =='true'?'?mz_key=1':'';
     	return "http://a."+sys+".taobao.com/i"+itemId+".htm"+mzKey;
     },
 
@@ -75,20 +75,6 @@ Muzhi.Good = Backbone.Model.extend({
             mzInfoPart = this.get("mzInfoPart");
 
         var inRegion = this.calculateTop();
-
-        //返回detail链接
-        function _detailUrl(mzBase){
-            var detailUrl = "#";
-            var isTmall = $("#J_isTmall").val() == "true";
-
-            if(mzBase.status == 2){
-                detailUrl = "http://a.m.taobao.com/i"+mzBase.itemId+".htm"+(isTmall ? "?mz_key=1":"");
-            }
-            if(mzBase.status == 3){
-                detailUrl = "http://tm.m.taobao.com/list.htm?statusId=0";
-            }
-            return detailUrl;
-        }
 
 
         return {
@@ -104,7 +90,7 @@ Muzhi.Good = Backbone.Model.extend({
             btnClass: this.stateMap(mzBase.status),
             startTime: mzInfoPart.startTime ? mzInfoPart.startTime : false,  //即将开始的时候存在startTime字段
             region: inRegion,
-            detailUrl: _detailUrl(mzBase.status),
+            detailUrl: mzBase.status == 2 ? "http://a.m.taobao.com/i"+mzBase.itemId+".htm" : (mzBase.status==3?"http://tm.m.taobao.com/list.htm?statusId=0":"#"), //立刻购买是跳转地址
             allowRefresh: ([3, 4, 1, 2].indexOf(parseInt(mzBase.status)) != -1 && mzCorePart.nowPrice != mzCorePart.minPrice) || parseInt(mzBase.status) ==7   //TODO:已经斗至最低的
         };
     }
