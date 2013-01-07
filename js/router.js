@@ -74,6 +74,16 @@ Muzhi.Router = Backbone.Router.extend({
         }).render();
 
         var pageNav = new PageNav({'id': '#J-pageNav', 'pageCount': Math.ceil(data.mzExtPart.totalCount / 12), 'objId': 'p'});
+
+
+
+        var scrollToPx = Muzhi.Util.scrollToItem(Muzhi.Goods);
+        if(scrollToPx){
+           setTimeout(function(){
+                window.scrollTo(0,scrollToPx)
+                },20);
+            localStorage.setItem("MZReturnToList",0);
+        }
     },
 
     _queryList:function(listId,pageNo){

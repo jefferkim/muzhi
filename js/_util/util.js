@@ -50,6 +50,21 @@ Muzhi.Util = {
         return true;
     },
 
+    //滚动到那个点
+    scrollToItem:function(data){
+        if(!window.localStorage){console.log("不支持localstorage");}
+        if(data){
+            var lists = data.toJSON();
+            var itemId = localStorage.getItem("MZReturnToList");
+            if(itemId == 0) return;
+            for(var i = 0,len = lists.length;i<len;i++){
+                if(lists[i].mzBasePart && lists[i].mzBasePart.itemId == localStorage.getItem("MZReturnToList")){
+                    return 50+(218+25)*i;
+                }
+            }
+        }
+    },
+
     catShow:function(){
 
         var locHash = location.hash.split("/")[0];

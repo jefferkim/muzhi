@@ -7,12 +7,25 @@ Muzhi.goodItemView = Backbone.View.extend({
     events: {
        "click .J-refresh": "refreshPrice",
        "click .J-join": "join",
+       "click .hd a":"jumpLink",
+       "click .pic a":"jumpLink",
        "tap .dynamic": "refreshPrice"
     },
 
     initialize: function () {
 
         this.model.on("joinNow", this.render, this);
+    },
+
+
+    jumpLink:function(e){
+        e.preventDefault();
+        var currentModel = this.model;
+        var target = e.currentTarget;
+        if(window.localStorage){
+            localStorage.setItem("MZReturnToList",currentModel.get("mzBasePart").itemId);
+        }
+        window.location.href = $(target).attr("href");
     },
 
     join: function (e) {
