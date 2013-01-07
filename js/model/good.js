@@ -76,6 +76,21 @@ Muzhi.Good = Backbone.Model.extend({
 
         var inRegion = this.calculateTop();
 
+        //返回detail链接
+        function _detailUrl(mzBase){
+            var detailUrl = "#";
+            var isTmall = $("#J_isTmall").val() == "true";
+
+            if(mzBase.status == 2){
+                detailUrl = "http://a.m.taobao.com/i"+mzBase.itemId+".htm"+(isTmall ? "?mz_key=1":"");
+            }
+            if(mzBase.status == 3){
+                detailUrl = "http://tm.m.taobao.com/list.htm?statusId=0";
+            }
+            return detailUrl;
+        }
+
+
         return {
             title: mzBase.title,
             pic: mzBase.pic+'_220x220.jpg',
@@ -89,7 +104,7 @@ Muzhi.Good = Backbone.Model.extend({
             btnClass: this.stateMap(mzBase.status),
             startTime: mzInfoPart.startTime ? mzInfoPart.startTime : false,  //即将开始的时候存在startTime字段
             region: inRegion,
-            detailUrl: mzBase.status == 2 ? "http://a.m.taobao.com/i"+mzBase.itemId+".htm" : (mzBase.status==3?"http://tm.m.taobao.com/list.htm?statusId=0":"#"), //立刻购买是跳转地址
+            detailUrl: _detailUrl(mzBase.status),
             allowRefresh: ([3, 4, 1, 2].indexOf(parseInt(mzBase.status)) != -1 && mzCorePart.nowPrice != mzCorePart.minPrice) || parseInt(mzBase.status) ==7   //TODO:已经斗至最低的
         };
     }
