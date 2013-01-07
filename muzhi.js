@@ -4739,7 +4739,7 @@ Muzhi.Good = Backbone.Model.extend({
 
         return {
             title: mzBase.title,
-            pic: mzBase.pic,
+            pic: mzBase.pic+'_220x220.jpg',
             link: this.getDetailUrl(mzBase.itemId),
             desc: mzInfoPart.desc,
             btnTxt: mzClick.showName, //按钮显示文案
@@ -4983,8 +4983,11 @@ Muzhi.Router = Backbone.Router.extend({
         var url = {api:"mtop.mz.getMzList", data:{"b2c":isTmall, "cc": listId||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
 
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
-
             self._listRender(resp);
+            if(pageNo != 1){
+                window.scrollTo(0,50);
+            }
+
         });
 
     },

@@ -68,7 +68,10 @@ Muzhi.goodItemView = Backbone.View.extend({
         if (minP == nowP) {
             indicatorOffset = 110;
             infoboxOffset = 85;
-        } else {
+        }  else if(maxP == nowP){
+            indicatorOffset = 0;
+            infoboxOffset = 0;
+        }  else {
             indicatorOffset = Math.min(85, 15+70*(maxP-nowP)/(maxP-minP));
             infoboxOffset = Math.min(66, 18+48*(maxP-nowP)/(maxP-minP));
         }

@@ -49,6 +49,10 @@ Muzhi.Good = Backbone.Model.extend({
         if (minPrice == nowPrice) {
             indicatorOffset = 110;
             infoboxOffset = 85;
+        }
+        else if(maxPrice == nowPrice){
+            indicatorOffset = 0;
+            infoboxOffset = 0;
         } else {
             indicatorOffset = Math.min(85, 15+70*(maxPrice-nowPrice)/(maxPrice-minPrice));
             infoboxOffset = Math.min(66, 18+48*(maxPrice-nowPrice)/(maxPrice-minPrice));
@@ -74,7 +78,7 @@ Muzhi.Good = Backbone.Model.extend({
 
         return {
             title: mzBase.title,
-            pic: mzBase.pic,
+            pic: mzBase.pic+'_220x220.jpg',
             link: this.getDetailUrl(mzBase.itemId),
             desc: mzInfoPart.desc,
             btnTxt: mzClick.showName, //按钮显示文案
