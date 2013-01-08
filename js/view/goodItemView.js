@@ -7,7 +7,7 @@ Muzhi.goodItemView = Backbone.View.extend({
     events: {
        "click .J-refresh": "refreshPrice",
        "click .J-join": "join",
-       "click .hd a":"jumpLink",
+       "click .hd h3 a":"jumpLink",
        "click .pic a":"jumpLink",
        "tap .dynamic": "refreshPrice"
     },

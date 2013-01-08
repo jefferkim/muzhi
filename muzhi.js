@@ -4255,7 +4255,7 @@ function mtop_h5() {
                 //fail ,remove token
                 //TODO:修改登录，令牌失效
                 if(-1 != ret.indexOf('TOKEN_EXOIRED::')){
-                    notification.flash("发生了一点小问题，请刷新页面").show();
+                    notification.flash("请刷新").show();
                 }
                 if (-1 == ret.indexOf('SUCCESS')) {
                     _removeToken();
@@ -4624,6 +4624,21 @@ Muzhi.Util = {
         return true;
     },
 
+    //滚动到那个点
+    scrollToItem:function(data){
+        if(!window.localStorage){console.log("不支持localstorage");}
+        if(data){
+            var lists = data.toJSON();
+            var itemId = localStorage.getItem("MZReturnToList");
+            if(itemId == 0) return;
+            for(var i = 0,len = lists.length;i<len;i++){
+                if(lists[i].mzBasePart && lists[i].mzBasePart.itemId == localStorage.getItem("MZReturnToList")){
+                    return 50+(218+25)*i;
+                }
+            }
+        }
+    },
+
     catShow:function(){
 
         var locHash = location.hash.split("/")[0];
@@ -4729,7 +4744,7 @@ Muzhi.Good = Backbone.Model.extend({
     
     getDetailUrl:function(itemId){
     	var sys=Muzhi.uriSysType;
-    	var mzKey=$('#J_isTmall').value=='true'?'?mz_key=1':'';
+    	var mzKey= $('#J_isTmall').val() =='true'?'?mz_key=1':'';
     	return "http://a."+sys+".taobao.com/i"+itemId+".htm"+mzKey;
     },
 
@@ -4740,6 +4755,7 @@ Muzhi.Good = Backbone.Model.extend({
             mzInfoPart = this.get("mzInfoPart");
 
         var inRegion = this.calculateTop();
+
 
         return {
             title: mzBase.title,
@@ -4781,12 +4797,25 @@ Muzhi.goodItemView = Backbone.View.extend({
     events: {
        "click .J-refresh": "refreshPrice",
        "click .J-join": "join",
+       "click .hd h3 a":"jumpLink",
+       "click .pic a":"jumpLink",
        "tap .dynamic": "refreshPrice"
     },
 
     initialize: function () {
 
         this.model.on("joinNow", this.render, this);
+    },
+
+
+    jumpLink:function(e){
+        e.preventDefault();
+        var currentModel = this.model;
+        var target = e.currentTarget;
+        if(window.localStorage){
+            localStorage.setItem("MZReturnToList",currentModel.get("mzBasePart").itemId);
+        }
+        window.location.href = $(target).attr("href");
     },
 
     join: function (e) {
@@ -4963,6 +4992,16 @@ Muzhi.Router = Backbone.Router.extend({
         }).render();
 
         var pageNav = new PageNav({'id': '#J-pageNav', 'pageCount': Math.ceil(data.mzExtPart.totalCount / 12), 'objId': 'p'});
+
+
+
+        var scrollToPx = Muzhi.Util.scrollToItem(Muzhi.Goods);
+        if(scrollToPx){
+           setTimeout(function(){
+                window.scrollTo(0,scrollToPx)
+                },20);
+            localStorage.setItem("MZReturnToList",0);
+        }
     },
 
     _queryList:function(listId,pageNo){
