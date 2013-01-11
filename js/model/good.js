@@ -17,6 +17,7 @@ Muzhi.Good = Backbone.Model.extend({
             "7": ["chance",false]            //MZ_CHANCE   还有机会
         };
         return map[st];
+
     },
 
 
