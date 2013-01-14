@@ -926,5 +926,19 @@ function mtop_h5() {
     return exports;
 }
 
+
+
+function _checkSysType() {
+    var _checkSysType = 'm';
+    if (window.location.host == 'localhost' || window.location.host.match('.*\\waptest\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
+        _checkSysType = 'waptest';
+    } else if (window.location.host.match('.*\\wapa\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
+        _checkSysType = 'wapa';
+    }
+    else if (window.location.host.match('.*\\m\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
+        _checkSysType = 'm';
+    }
+    return _checkSysType;
+}
 Muzhi.mtopH5 = mtop_h5();
 Muzhi.uriSysType = _checkSysType();
