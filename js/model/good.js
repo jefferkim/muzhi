@@ -65,8 +65,7 @@ Muzhi.Good = Backbone.Model.extend({
     
     getDetailUrl:function(itemId){
     	var sys=Muzhi.uriSysType;
-    	var mzKey= $('#J_isTmall').val() =='true'?'?mz_key=1':'';
-    	return "http://a."+sys+".taobao.com/i"+itemId+".htm"+mzKey;
+    	return "http://a."+sys+".taobao.com/i"+itemId+".htm?"+ $("#J_moreParams").val();
     },
 
     getItemInfo: function () {

@@ -79,13 +79,13 @@ Muzhi.goodItemView = Backbone.View.extend({
             indicatorOffset,infoboxOffset;
 
         if (minP == nowP) {
-            indicatorOffset = 110;
-            infoboxOffset = 85;
+            indicatorOffset = 105;
+            infoboxOffset = 82;
         }  else if(maxP == nowP){
             indicatorOffset = 0;
             infoboxOffset = 0;
         }  else {
-            indicatorOffset = Math.min(85, 15+70*(maxP-nowP)/(maxP-minP));
+            indicatorOffset = Math.min(82, 2+80*(maxP-nowP)/(maxP-minP));
             infoboxOffset = Math.min(66, 18+48*(maxP-nowP)/(maxP-minP));
         }
         tip.find(".current-price").html("&yen;"+data.mzCorePart.nowPrice);

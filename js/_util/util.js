@@ -33,10 +33,7 @@ Muzhi.Util = {
             var currentUrl,
                 host = location.hostname.match(/$|\.(?:m|waptest|wapa)\.taobao\.com/gi);
             if(id){
-                var isTmall = $("#J_isTmall").val() == "true";
-                var isTmallParam = isTmall ? "?mz_key=1":"";
-                var isCanpaiParam = (isCanpai ? (isTmall ? "&":"?")+"func=dxp":"");
-                currentUrl = "http://a." + Muzhi.uriSysType + ".taobao.com/i"+id+".htm"+isTmallParam+isCanpaiParam;
+                currentUrl = "http://a." + Muzhi.uriSysType + ".taobao.com/i"+id+".htm?"+$("#J_moreParams").val()+(isCanpai ? "&func=dxp":"");
             }else{
                 currentUrl = encodeURIComponent(location.href.split("#")[0]);
             }
