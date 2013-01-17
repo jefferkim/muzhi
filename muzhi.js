@@ -3712,703 +3712,6 @@ Swipe.prototype = {
  */
 
 
-/*===========h5 base ==========*/
-
-function h5_base() {
-    var exports = {};///返回对象
-
-
-
-
-    //paramKey
-    exports.paramKey = 'h5_paramKey';
-    exports.targetUrl = 'h5_targetUrl';
-    //userinfoKey
-    exports.userInfoKey = 'h5_userInfoKey';
-    //href hash
-    exports.hrefHash = 'h5_hrefHashKey';
-    // for token
-    exports.appKey = 'h5_app_key';
-    exports.appToken = 'h5_app_token';
-    exports.appRefreshToken = 'h5_app_ref_token';
-    exports.appTokenExpired = 'h5_app_token_expired';
-    exports.appTokenBetween = 'h5_app_token_between';
-    exports.appTokenSaveTime = 'h5_app_token_save_time'; //存储localstoary time
-    exports.appRequestFailed = 'h5_app_request_failed_tag';
-
-    // Extend a given object with all the properties in passed-in object(s).
-    function extend(obj) {
-        var args = Array.prototype.slice.call(arguments, 1);
-        for(var i = 0, len = args.length; i < len; i++) {
-            for(var prop in args[i]) {
-                obj[prop] = args[i][prop];
-            }
-        }
-        return obj;
-    };
-
-
-    exports.useLocalstorage = useLocalstorage = window.localStorage != null;
-
-    //类似于map的set方法，如果value不是string对象，会用JSON.stringify转化为string，存储到本地
-    exports.set = function(key, value) {
-        if(useLocalstorage) {
-            if( typeof (value) != "string") {
-                value = JSON.stringify(value);
-                // JSON.parse
-            };
-            window.localStorage.setItem(key, value);
-            return true;
-        }
-        return false;
-    }
-
-    exports.add = function(key, value) {
-        if(useLocalstorage) {
-            if( typeof (value) == "string") {
-                value = JSON.parse(value);
-            } else {
-                // JSON.parse
-                try {
-                    extend(value, JSON.parse(getValue(key)));
-                } catch(e) {
-                    //  console.log(e);
-                }
-                value = JSON.stringify(value);
-            }
-            window.localStorage.setItem(key, value);
-            return true;
-        }
-        return false;
-    }
-    //简单的做了一个window.localStorage.getItem 映射
-    exports.get = getValue = function(key) {
-        if(useLocalstorage) {
-            return window.localStorage.getItem(key);
-        }
-        return null;
-    }
-    //简单的做了一个window.localStorage.getItem 映射
-    exports.removeValue = function(key) {
-        if(useLocalstorage) {
-            return window.localStorage.removeItem(key);
-        }
-    }
-    //清除所有localStorage
-    exports.clearAll = function() {
-        if(useLocalstorage) {
-            return window.localStorage.clear();
-        }
-    }
-    /**
-     * 判断是否从cache中取hash
-     * 如果当前请求没有hash则从localstoary中取，否则如果请求带hash保存当前hash到localstoray中
-     */
-    exports.userCacheHash = function() {
-        //如果没有hash，从localStoray中取上一次的hash
-        if(!location.hash && this.get(this.hrefHash)) {
-            location.hash = this.get(this.hrefHash);
-            return true;
-        }
-        //save current hash to cache
-        else if(location.hash) {
-            this.set(this.hrefHash, location.hash);
-        }
-        return false;
-    }
-    //获取指定参数值
-    exports.getParamFromStorage = function(key) {
-        try {
-            return JSON.parse(this.get(this.paramKey))[key];
-        } catch(ex) {
-            //
-        }
-        return null;
-
-    }
-    //获取指定参数值
-    exports.getUserProFromStorage = function(pro) {
-        try {
-            return JSON.parse(this.get(this.userInfoKey))[pro];
-        } catch(ex) {
-            //
-        }
-        return null;
-    }
-    //当前时间与服务器当前时间比较
-    exports.getBetweenTime = function(currentSeverTime) {
-        return (new Date()).getTime() - currentSeverTime;
-
-    }
-
-    exports.checkIsBlank = function(s) {
-        return null == s || '' == s;
-    }
-    //判断是否登录
-    exports.isLogin = function() {
-        var nick = this.getUserProFromStorage('nick');
-
-        if(nick == '' || nick == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    //删除token
-    exports.removeToken = function () {
-        try {
-            this.removeValue(this.appToken);
-            this.removeValue(this.appRefreshToken);
-            this.removeValue(this.appTokenExpired);
-            this.removeValue(this.appTokenBetween);
-            this.removeValue(this.appTokenSaveTime);
-        } catch (e) {
-
-        }
-
-    }
-    //获取Url参数,不传key返回所有参数
-    exports.getQueryString = function(paramKey){
-        var paramStr=location.search;
-        if(paramStr.length < 1 )
-        {
-            return "";
-        }
-        paramStr=paramStr.substr(1);
-        var params = paramStr.split('&');
-        var queryString={};
-        for(i in params)
-        {
-            var aparam = params[i].split('=');
-            queryString[decodeURIComponent(aparam[0])] = decodeURIComponent(aparam[1]) ;
-        }
-
-        if (paramKey)
-        {
-            return queryString[paramKey];
-        }
-        else
-        {
-            return queryString;
-        }
-
-    }
-
-    return exports;
-}
-
-
-/*=======end h5_base =======*/
-
-
-
-
-/*======== config=======*/
-function _checkSysType() {
-    var _checkSysType = 'm';
-    if (window.location.host == 'localhost' || window.location.host.match('.*\\waptest\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
-        _checkSysType = 'waptest';
-    } else if (window.location.host.match('.*\\wapa\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
-        _checkSysType = 'wapa';
-    }
-    else if (window.location.host.match('.*\\m\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
-        _checkSysType = 'm';
-    }
-    return _checkSysType;
-}
-
-/*======= end config =======*/
-/*======== uri =======*/
-function uriMod() {
-
-    var tbh5 = h5_base();
-
-    var exports = {};///返回对象
-
-
-    // configure options for M\WAPA\WAPTEST
-    exports.uri = {
-        protocol:'http://',
-        sysType:_checkSysType() || 'm',
-        defaultDomain:'taobao'
-    };
-
-    var _domainWhiteList = ['taobao', 'tmall', 'etao', 'alibaba', 'alipay'];
-    var _Domainholder = '${_serverDomain}';
-    // waptest/wapa/m/wap.${_serverDomain}.com
-    exports._serverHost = exports.uri.sysType + '.' + _Domainholder + '.com';
-
-    // sub uri , can be extended
-    exports.subUri = {
-        index:exports.uri.protocol + exports._serverHost,
-        // you can add ur uri here
-    };
-
-    // sid & tt & default url query str
-    exports.ttQueryStr = "";
-
-    // load
-    try {
-        var defaultParams = JSON.parse(tbh5.get(tbh5.userInfoKey) || '{}') || {};
-        var sid = defaultParams.sid;
-        if (null != sid && '' != sid) {
-            exports.ttQueryStr += ('sid=' + sid);
-        }
-        var paramKeyValues = JSON.parse(tbh5.get(tbh5.paramKey) || '{}') || {};
-        if (paramKeyValues.ttid && '' != paramKeyValues.ttid) {
-            exports.ttQueryStr += ("&ttid=" + paramKeyValues.ttid);
-        }
-
-        //		console.log(exports.ttQueryStr);
-    } catch (e) {
-        // do nothing
-    }
-
-    // ~~~ exportsort function begin ~~~
-
-    /**
-     * render tool: sub uri
-     * @uri        [must]exports.subUri, you can add new configuration or extends this module to define new subUri
-     * @target    [optional]pageName, just like 'index.htm'
-     * @param    [optional]json value, url param, just like {param1:'value1', param2:'value2'}
-     * @path        [optional]url path, no need the first and the last '/', just like 'subPath1/subPath2/subPath3'
-     * @domain    [optional]domainName, just like 'tmall', default is ${exports.uri.defaultDomain}
-     *
-     * you can use like :
-     - URI_MODULE.renderURI(URI_MODULE.subUri.shopHost, 'shop_index.htm', {'shopId':1688},'shop','tmall');
-     - URI_MODULE.renderURI(URI_MODULE.subUri.shopHost, 'shop_index.htm', {'shopId':1688},'shop');
-     - URI_MODULE.renderURI(URI_MODULE.subUri.shopHost, 'shop_index.htm', {'shopId':1688});
-     - URI_MODULE.renderURI(URI_MODULE.subUri.shopHost, 'shop_index.htm');
-     - URI_MODULE.renderURI(URI_MODULE.subUri.shopHost);
-     *
-     * error : URI_MODULE.renderURI();
-     */
-    exports.renderURI = function (uri, target, param, path, domain) {
-        return _render(buildUrl(_getServerHost(uri, domain), target, param, path));
-    }
-
-    /**
-     * render tool: domain
-     * @target    [optional]pageName, just like 'index.htm'
-     * @param    [optional]json value, url param, just like {param1:'value1', param2:'value2'}
-     * @path        [optional]url path, no need the first and the last '/', just like 'subPath1/subPath2/subPath3'
-     * @domain    [optional]domainName, just like 'tmall', default is ${exports.uri.defaultDomain}
-     *
-     * you can use like :
-     - URI_MODULE.renderDomain('a.htm',{'a':3},'subPath','etao');
-     - URI_MODULE.renderDomain('a.htm',{'a':3},'subPath');
-     - URI_MODULE.renderDomain('a.htm',{'a':3});
-     - URI_MODULE.renderDomain('a.htm'));
-     - URI_MODULE.renderDomain();
-     */
-    exports.renderDomain = function (target, param, path, domain) {
-        return _render(buildUrl(_getServerHost(exports.subUri.index, domain), target, param, path));
-    }
-
-    /**
-     * render tool: server
-     * @target    [optional]pageName, just like 'index.htm'
-     * @param    [optional]json value, url param, just like {param1:'value1', param2:'value2'}
-     * @path        [optional]url path, no need the first and the last '/', just like 'subPath1/subPath2/subPath3'
-     * @server    [must]base url, like 'http://www.taobao.com/juhuasuan'
-     *
-     * you can use like :
-     - URI_MODULE.renderServer('detail.htm',{'id':3},'s1/s2','http://m.etao.com');
-     - URI_MODULE.renderServer('detail.htm',{'id':3},'','http://m.etao.com/s1/s2');
-     - URI_MODULE.renderServer('detail.htm',{},'','http://m.etao.com');
-     - URI_MODULE.renderServer('',{},'','http://m.etao.com');
-     *
-     * error : URI_MODULE.renderServer('detail.htm',{'id':3},'s1/s2');
-     */
-    exports.renderServer = function (target, param, path, server) {
-        return _render(buildUrl(server, target, param, path));
-    }
-
-    // encode
-    exports.encode = function (v) {
-        return encodeURI(v);
-    }
-
-    // getStrParamFromJson
-    exports.getStrParamFromJson = function (j) {
-        return _getJsonStr(j);
-    }
-
-    // createURI for extends
-    exports.createURI = function (name) {
-        if (name === 'home') {
-            return exports.uri.protocol + exports._serverHost;
-        } else {
-            return exports.uri.protocol + name + '.' + exports._serverHost;
-        }
-    }
-
-    // ~~~ exportsort function end ~~~ //
-
-    // --- private _method begin ---
-
-    // add default queryString to url
-    function _render(url) {
-        if (null != exports.ttQueryStr && '' != exports.ttQueryStr) {
-            var m = url.match("\\.[a-zA-Z]+\\?");
-            if (null != m && 0 < m.length) {
-                if (url.indexOf('?') == (url.length - 1)) {
-                    url = url + exports.ttQueryStr;
-                } else {
-                    url = url + '&' + exports.ttQueryStr;
-                }
-            } else {
-                url = url + '?' + exports.ttQueryStr;
-            }
-
-            console.log("render:", url);
-        }
-
-        return url;
-    }
-
-    // build url
-    function buildUrl(base, target, param, folder) {
-        if (!_checkIsBlank(folder)) {
-            base += ('/' + folder);
-        }
-
-        if (!_checkIsBlank(target)) {
-            base += ('/' + target);
-        }
-
-        var havParam = false;
-        if (null != param) {
-            for (var k in param) {
-                if (null != param[k]) {
-                    havParam = true;
-                    break;
-                }
-            }
-        }
-
-        if (havParam) {
-            base += ('?' + _getJsonStr(param));
-        }
-        return base;
-    }
-
-    // check domain is ok or not
-    function _checkDomain(domain) {
-        if (_checkIsBlank(domain)) {
-            return false;
-        }
-
-        for (var i = 0; i < _domainWhiteList.length; i++) {
-            if (_domainWhiteList[i].toLowerCase() == domain.toLowerCase()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    function _checkIsBlank(s) {
-        return tbh5.checkIsBlank(s);
-    }
-
-    // get server host, replace ${PlaceHolder} with domain
-    function _getServerHost(host, domain) {
-        return host.replace(_Domainholder, function () {
-            if (!_checkDomain(domain)) {
-                return exports.uri.defaultDomain;
-            } else {
-                return domain;
-            }
-        });
-    }
-
-    // change json object to json string
-    function _getJsonStr(j) {
-        var s = '';
-        if (null == j) {
-            return s;
-        }
-
-        for (var k in j) {
-            if (null != j[k] && '' != j[k]) {
-                s += (k + '=' + encodeURIComponent(j[k]) + '&');
-            }
-        }
-
-        if ('' != s && (s.length - 1) == s.lastIndexOf('&')) {
-            s = s.substr(0, s.length - 1);
-        }
-
-        return s;
-    }
-
-    // --- private method end --- //
-
-    return exports;
-}
-
-
-/*======= end uri =======*/
-
-
-function mtop_h5() {
-    var exports = {};//返回对象
-
-    // require module
-    var tbh5 = h5_base();
-    var uri = uriMod();
-
-
-
-// app key is stored pre step, for example : loading page
-    var app_key_id	= 'J_app_key';
-    var apiType		= 'h5Api.do';
-
-    // ~~~ public method begin ~~~
-
-    /**
-     * get first token
-     * @v			: version ,default is '1.0'
-     * @successback	: success method
-     * @errorback	: error method
-     */
-    exports.getFirstToken = function (v, successback, errorback) {
-        var extParam		= {};
-        extParam.api 		= 'mtop.auth.h5.getFirstToken2';
-        extParam.v 			= v || "1.0";
-        extParam.appKey		= document.getElementById(app_key_id).value;
-        extParam.t			= (new Date()).getTime();
-        //get URL
-        var firstTokenUrl	= _addJsonParam(uri.renderURI(uri.createURI('api'), apiType, extParam, 'rest'));
-
-        //	console.log('getFirstToken:firstTokenUrl='+firstTokenUrl);
-
-        $.ajax({
-            type : 'GET',
-            url  : firstTokenUrl,
-            timeout:10000,
-            success : function(result) {
-                var ret = (result.ret ? result.ret:"").toString();
-                if (-1 != ret.indexOf('SUCCESS::')) {
-                    _saveNewToken(result);
-                }
-                // callback
-                if (successback) {
-                    successback(result);
-                }
-            },
-            error : function (error) {
-                //	console.log('getFirstToken ajax error.');
-                if(errorback) {
-                    errorback(error);
-                }
-            }
-            ,
-            complete : function(xhr, status){
-                if(status !='success' && errorback) {
-                    errorback(status);
-                }
-            }
-        });
-    }
-
-    /**
-     *H5 mtop 接口
-     * 主流程：
-     * 1、判断本地token是否存在或是否超时；如是则调用getFirstToken获取token，然后调用业务接口
-     * 否则直接调用业务接口
-     * 2、如果业务接口调用失败，清除本地token，返回失败
-     *
-     */
-    exports.getApi = function (api, v, data, extParam, callback, errorback) {
-
-        extParam.api 		= api;
-        extParam.v 			= v || "*";
-        extParam.data 		= typeof (data) == "string" ? data : JSON.stringify(data);
-
-        var url = uri.renderURI(uri.createURI('api'), apiType, extParam, 'rest');
-
-        var app_key    = document.getElementById(app_key_id).value;
-
-        //     console.log("request url="+url);
-        //判断是否调用取得firstToken
-        if(_isgetFirstToken()) {
-            // no token , to error page
-            //        console.log('need invoke getFirstToken');
-            exports.getFirstToken('1.0',
-                function(result){
-                    var ret = (result.ret ? result.ret:"").toString();
-                    //如果成功发送请求
-                    if (-1 != ret.indexOf('SUCCESS::')) {
-                        //invoke biz api,直接使用返回结果的token
-                        _send(url, app_key, result.data.token.token , extParam.data, callback, errorback);
-                    }
-                    else
-                    {
-                        if (callback) {
-                            callback(result);
-                        }
-                    }
-                },
-                //错误直接向上抛
-                function(error){
-                    if (errorback) {
-                        errorback(error);
-                    }
-                    //           console.log('get first token fail!');
-                });
-        }
-        else{
-            //invoke biz api
-            _send(url, app_key , tbh5.get(tbh5.appToken), extParam.data, callback, errorback);
-
-        }
-    }
-
-    // ~~~ public method end ~~~
-
-    // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---//
-
-    // ~~~ private method begin ~~~
-    /**
-     * 判断是否调用取得token接口
-     */
-    var _isgetFirstToken = function()
-    {
-        var app_token   = tbh5.get(tbh5.appToken);
-        if(tbh5.checkIsBlank(app_token))
-        {
-            return true;
-        }
-        else
-        {
-            var app_token_expired   = parseInt(tbh5.get(tbh5.appTokenExpired) || '0');
-            var app_token_between   = parseInt(tbh5.get(tbh5.appTokenBetween) || '0');
-            var appTokenSaveTime   = parseInt(tbh5.get(tbh5.appTokenSaveTime) || '0');
-            var currentTime     = (new Date()).getTime();
-            //本地token超时1分钟，或者服务端token 超时1分钟
-            if ((currentTime - appTokenSaveTime )> 60000 ||  (app_token_expired - currentTime + app_token_between) < 60000) {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
-
-    /**
-     * 发送业务请求
-     * 1、如果返回超时会清楚localStoary
-     *
-     */
-    var _send = function (url, app_key, app_token, data, callback, errorback) {
-        url = _createSignUrl(url, app_key, app_token, data);
-        //		console.log('use token send : ' + app_token+";url="+url);
-        $.ajax({
-            type : 'GET',
-            url  : url,
-            timeout:10000,
-            success : function(result) {
-                // if token is expired, low percent event.
-                var ret = (result.ret ? result.ret:"").toString();
-                //if(-1 != ret.indexOf('TOKEN_EXOIRED::')  || -1 != ret.indexOf('ILLEGAL_REFRESH_TOKEN')) {
-                //fail ,remove token
-                if (-1 ==ret.indexOf('SUCCESS') ) {
-                    tbh5.removeToken();
-                }
-                if (callback) {
-                    callback(result);
-                }
-            },
-            error : function (error) {
-                if(errorback) {
-                    errorback(error);
-                }
-            },
-            complete : function(xhr, status){
-                if(status !='success' && errorback) {
-                    errorback(status);
-                }
-            }
-        });
-    }
-
-    var _createSignUrl = function (url, app_key, app_token, data) {
-        var t = (new Date()).getTime();
-        return _addJsonParam(url) + '&appKey=' + app_key + '&sign=' + _sign(app_key, app_token, t, data) + '&t=' + t ;
-    }
-
-    var _addJsonParam = function (url) {
-        if(-1 == url.indexOf('callback=')) {
-            var index = url.indexOf('?');
-            return url.substr(0, index) + '?callback=?&type=jsonp&' + url.substr(index + 1, url.length);
-        }
-        else
-        {
-            return url;
-        }
-    }
-
-    var _sign = function (app_key, app_token, t, data) {
-        var signTemp = app_token + '&' + t + "&" + app_key +"&" + data;
-
-        return utils.MD5(signTemp);
-    }
-
-
-    var _saveNewToken = function (r) {
-        var newToken = r.data.token.token;
-        var newTokenExpired = parseInt(r.data.token.createTime || '0') + (parseInt(r.data.token.lifetime || '0') * 1000);
-        var newTokenCreate = parseInt(r.data.token.createTime || '0');
-        var refreToken = r.data.token.refreshToken;
-
-        var currentTime = (new Date()).getTime();
-        var newTokenBetween = tbh5.getBetweenTime(newTokenCreate);
-
-        if(!tbh5.checkIsBlank(newToken) && newTokenExpired > (currentTime - newTokenBetween)) {
-            try {
-                tbh5.set(tbh5.appToken, newToken);
-                //tbh5.set(tbh5.appRefreshToken, refreToken); //not need
-                tbh5.set(tbh5.appTokenExpired, newTokenExpired);
-                tbh5.set(tbh5.appTokenBetween, newTokenBetween);
-                tbh5.set(tbh5.appTokenSaveTime, currentTime);
-
-                if (tbh5.get(tbh5.appToken) == newToken) {
-                    return newToken;
-                }
-            } catch (e) {
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
-    // ~~~ md5 methodn end ~~~
-    return exports;
-}
-
-Muzhi.mtopH5 = mtop_h5();
-Muzhi.uriSysType = _checkSysType();
-/**
- * 简化 h5APi 的调用
- * 前提：
- *   调用之前当前文档必须包含一个J_app_key的AppKey隐藏字段
- * 一般直接调用
- * getApi(
- *     api, 如：mtop.logistic.getlogisticbyorder
- *      v, 1.0
- *      data,  {'orderId':148697349962715}
- *  extParam,  {'pds':'seeflow#order'}
- *  callback,
- *  errorback
- * );
- *
- */
-
-
 function configS(){
     var exports = {};
 
@@ -5321,6 +4624,20 @@ function mtop_h5() {
     return exports;
 }
 
+
+
+function _checkSysType() {
+    var _checkSysType = 'm';
+    if (window.location.host == 'localhost' || window.location.host.match('.*\\waptest\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
+        _checkSysType = 'waptest';
+    } else if (window.location.host.match('.*\\wapa\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
+        _checkSysType = 'wapa';
+    }
+    else if (window.location.host.match('.*\\m\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')) {
+        _checkSysType = 'm';
+    }
+    return _checkSysType;
+}
 Muzhi.mtopH5 = mtop_h5();
 Muzhi.uriSysType = _checkSysType();
 Muzhi.Util = {
@@ -5358,10 +4675,7 @@ Muzhi.Util = {
             var currentUrl,
                 host = location.hostname.match(/$|\.(?:m|waptest|wapa)\.taobao\.com/gi);
             if(id){
-                var isTmall = $("#J_isTmall").val() == "true";
-                var isTmallParam = isTmall ? "?mz_key=1":"";
-                var isCanpaiParam = (isCanpai ? (isTmall ? "&":"?")+"func=dxp":"");
-                currentUrl = "http://a." + Muzhi.uriSysType + ".taobao.com/i"+id+".htm"+isTmallParam+isCanpaiParam;
+                currentUrl = "http://a." + Muzhi.uriSysType + ".taobao.com/i"+id+".htm?"+$("#J_moreParams").val()+(isCanpai ? "&func=dxp":"");
             }else{
                 currentUrl = encodeURIComponent(location.href.split("#")[0]);
             }
@@ -5448,6 +4762,7 @@ Muzhi.Good = Backbone.Model.extend({
             "7": ["chance",false]            //MZ_CHANCE   还有机会
         };
         return map[st];
+
     },
 
 
@@ -5478,14 +4793,14 @@ Muzhi.Good = Backbone.Model.extend({
             indicatorOffset,infoboxOffset;
 
         if (minPrice == nowPrice) {
-            indicatorOffset = 110;
-            infoboxOffset = 85;
+            indicatorOffset = 105;
+            infoboxOffset = 82;
         }
         else if(maxPrice == nowPrice){
             indicatorOffset = 0;
             infoboxOffset = 0;
         } else {
-            indicatorOffset = Math.min(85, 15+70*(maxPrice-nowPrice)/(maxPrice-minPrice));
+            indicatorOffset = Math.min(82, 2+80*(maxPrice-nowPrice)/(maxPrice-minPrice));
             infoboxOffset = Math.min(66, 18+48*(maxPrice-nowPrice)/(maxPrice-minPrice));
         }
         return [indicatorOffset,infoboxOffset];
@@ -5495,8 +4810,7 @@ Muzhi.Good = Backbone.Model.extend({
     
     getDetailUrl:function(itemId){
     	var sys=Muzhi.uriSysType;
-    	var mzKey= $('#J_isTmall').val() =='true'?'?mz_key=1':'';
-    	return "http://a."+sys+".taobao.com/i"+itemId+".htm"+mzKey;
+    	return "http://a."+sys+".taobao.com/i"+itemId+".htm?"+ $("#J_moreParams").val();
     },
 
     getItemInfo: function () {
@@ -5620,13 +4934,13 @@ Muzhi.goodItemView = Backbone.View.extend({
             indicatorOffset,infoboxOffset;
 
         if (minP == nowP) {
-            indicatorOffset = 110;
-            infoboxOffset = 85;
+            indicatorOffset = 105;
+            infoboxOffset = 82;
         }  else if(maxP == nowP){
             indicatorOffset = 0;
             infoboxOffset = 0;
         }  else {
-            indicatorOffset = Math.min(85, 15+70*(maxP-nowP)/(maxP-minP));
+            indicatorOffset = Math.min(82, 2+80*(maxP-nowP)/(maxP-minP));
             infoboxOffset = Math.min(66, 18+48*(maxP-nowP)/(maxP-minP));
         }
         tip.find(".current-price").html("&yen;"+data.mzCorePart.nowPrice);
