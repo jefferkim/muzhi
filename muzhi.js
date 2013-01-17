@@ -4800,7 +4800,7 @@ Muzhi.Good = Backbone.Model.extend({
             indicatorOffset = 0;
             infoboxOffset = 0;
         } else {
-            indicatorOffset = Math.min(82, 2+80*(maxPrice-nowPrice)/(maxPrice-minPrice));
+            indicatorOffset = Math.min(82, 17+65*(maxPrice-nowPrice)/(maxPrice-minPrice));
             infoboxOffset = Math.min(66, 18+48*(maxPrice-nowPrice)/(maxPrice-minPrice));
         }
         return [indicatorOffset,infoboxOffset];
@@ -4940,7 +4940,7 @@ Muzhi.goodItemView = Backbone.View.extend({
             indicatorOffset = 0;
             infoboxOffset = 0;
         }  else {
-            indicatorOffset = Math.min(82, 2+80*(maxP-nowP)/(maxP-minP));
+            indicatorOffset = Math.min(82, 17+65*(maxP-nowP)/(maxP-minP));
             infoboxOffset = Math.min(66, 18+48*(maxP-nowP)/(maxP-minP));
         }
         tip.find(".current-price").html("&yen;"+data.mzCorePart.nowPrice);
