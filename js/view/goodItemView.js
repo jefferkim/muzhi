@@ -56,8 +56,10 @@ Muzhi.goodItemView = Backbone.View.extend({
     refreshPrice: function (e) {
         e.preventDefault();
         var self = this;
+        var refreshBtn = $(e.currentTarget).find("s");
         var currentModel = this.model;
-
+        refreshBtn.addClass("refreshing");
+        setTimeout(function(){ refreshBtn.removeClass("refreshing")},1000);
         var url = {api:"mtop.mz.getMzItemInfo",data:{"itemId": currentModel.get("mzBasePart").itemId}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
 

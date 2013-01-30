@@ -116,7 +116,6 @@ Muzhi.Router = Backbone.Router.extend({
             if(pageNo != 1){
                 window.scrollTo(0,50);
             }
-
         });
 
 
