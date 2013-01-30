@@ -15,6 +15,7 @@ Muzhi.Router = Backbone.Router.extend({
     //TODO:代付款
 
     initialize: function () {
+
         var self = this;
         var bulletsH = "",len = $("li","#J-slider").length;
         for(var i = 0; i<len ;i++){

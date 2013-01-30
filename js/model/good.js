@@ -41,6 +41,7 @@ Muzhi.Good = Backbone.Model.extend({
 
     calculateTop:function(){
 
+
         var mzCorePart = this.get("mzCorePart"),
             nowPrice = mzCorePart.nowPrice || mzCorePart.maxPrice,  //即将开始时不提供当前值
             maxPrice = mzCorePart.maxPrice,
