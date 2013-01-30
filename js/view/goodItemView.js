@@ -94,11 +94,11 @@ Muzhi.goodItemView = Backbone.View.extend({
         tip.find("em").text(data.mzCorePart.numOfJoiners+"人斗价");
         desc.text(data.mzInfoPart.desc);
         pos.animate({
-            top:  indicatorOffset
+            "translateY" :  indicatorOffset
         },500);
 
         tip.animate({
-            top: infoboxOffset
+            "translateY" : infoboxOffset
         },500);
     },
 

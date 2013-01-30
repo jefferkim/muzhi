@@ -4786,6 +4786,7 @@ Muzhi.Good = Backbone.Model.extend({
 
     calculateTop:function(){
 
+
         var mzCorePart = this.get("mzCorePart"),
             nowPrice = mzCorePart.nowPrice || mzCorePart.maxPrice,  //即将开始时不提供当前值
             maxPrice = mzCorePart.maxPrice,
@@ -4911,8 +4912,10 @@ Muzhi.goodItemView = Backbone.View.extend({
     refreshPrice: function (e) {
         e.preventDefault();
         var self = this;
+        var refreshBtn = $(e.currentTarget).find("s");
         var currentModel = this.model;
-
+        refreshBtn.addClass("refreshing");
+        setTimeout(function(){ refreshBtn.removeClass("refreshing")},1000);
         var url = {api:"mtop.mz.getMzItemInfo",data:{"itemId": currentModel.get("mzBasePart").itemId}};
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
 
@@ -4998,6 +5001,7 @@ Muzhi.Router = Backbone.Router.extend({
     //TODO:代付款
 
     initialize: function () {
+
         var self = this;
         var bulletsH = "",len = $("li","#J-slider").length;
         for(var i = 0; i<len ;i++){
@@ -5098,8 +5102,8 @@ Muzhi.Router = Backbone.Router.extend({
             if(pageNo != 1){
                 window.scrollTo(0,50);
             }
-
         });
+
 
     },
 
