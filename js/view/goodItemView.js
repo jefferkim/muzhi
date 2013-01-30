@@ -61,10 +61,11 @@ Muzhi.goodItemView = Backbone.View.extend({
         refreshBtn.addClass("refreshing");
         setTimeout(function(){ refreshBtn.removeClass("refreshing")},1000);
         var url = {api:"mtop.mz.getMzItemInfo",data:{"itemId": currentModel.get("mzBasePart").itemId}};
-        Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+       Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
 
             self.refreshRender(resp.data.defaultData);
         });
+
 
     },
 
@@ -93,12 +94,13 @@ Muzhi.goodItemView = Backbone.View.extend({
         tip.find(".current-price").html("&yen;"+data.mzCorePart.nowPrice);
         tip.find("em").text(data.mzCorePart.numOfJoiners+"人斗价");
         desc.text(data.mzInfoPart.desc);
+
         pos.animate({
-            "translateY" :  indicatorOffset
+            top :  indicatorOffset
         },500);
 
         tip.animate({
-            "translateY" : infoboxOffset
+            top : infoboxOffset
         },500);
     },
 
