@@ -118,6 +118,16 @@ Muzhi.Router = Backbone.Router.extend({
             }
 
         });
+        /*$.ajax({
+            url:"js/json/list.json",
+            dataType:"json",
+            success:function(resp){
+                self._listRender(resp);
+                if(pageNo != 1){
+                    window.scrollTo(0,50);
+                }
+            }
+        })*/
 
     },
 
