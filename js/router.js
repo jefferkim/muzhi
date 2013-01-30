@@ -111,14 +111,14 @@ Muzhi.Router = Backbone.Router.extend({
         var isTmall = $("#J_isTmall").val() == "true" ? 1 :0;
         var url = {api:"mtop.mz.getMzList", data:{"b2c":isTmall, "cc": listId||0, "pre": "0", "page": pageNo || 1, "pagesize": "12", "ext": "1"}};
 
-        Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+        /*Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             self._listRender(resp);
             if(pageNo != 1){
                 window.scrollTo(0,50);
             }
 
-        });
-        /*$.ajax({
+        }); */
+       $.ajax({
             url:"js/json/list.json",
             dataType:"json",
             success:function(resp){
@@ -127,7 +127,7 @@ Muzhi.Router = Backbone.Router.extend({
                     window.scrollTo(0,50);
                 }
             }
-        })*/
+        })
 
     },
 
