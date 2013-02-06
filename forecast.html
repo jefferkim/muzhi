@@ -81,31 +81,34 @@
 </div>
 <script type="text/javascript" src="js/vendor/zepto.js"> </script>
 
+<script src="swipe.js"></script>
 
 <script>
 
-   var pageY,elOffsetY;
 
-   document.addEventListener("touchmove",function(e){
-       pageY = e.pageY;
-       var el = $(".J-yr");
-       el.each(function(){
-           var $this = $(this);
-           elOffsetY = $this.offset().top;
-           console.log("pageY is "+pageY);
-           console.log("el offset is "+elOffsetY);
-           if(pageY>elOffsetY){
-               $this.find("span").css({
-                   position:"fixed",
-                   top:0
-               })
-           }else{
-               $this.find("span").css({
-                   position:"relative"
-               })
-           }
-       })】
-   },false);
+    var pageY,elOffsetY;
+    new Swipe("body",{
+        onMove:function(e){
+            pageY = e.pageY;
+            var el = $(".J-yr");
+            el.each(function(){
+                var $this = $(this);
+                elOffsetY = $this.offset().top;
+                console.log("pageY is "+pageY);
+                console.log("el offset is "+elOffsetY);
+                if(pageY>elOffsetY){
+                    $this.find("span").css({
+                        position:"fixed",
+                        top:0
+                    })
+                }else{
+                    $this.find("span").css({
+                        position:"relative"
+                    })
+                }
+            })
+        }
+    });
 </script>
 </body>
 </html>
