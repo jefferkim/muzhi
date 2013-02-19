@@ -1,0 +1,28 @@
+{"api":"mtop.mz.getMzList", "v":"1.0", "ret":["SUCCESS::调用成功"], "data":{
+    "defaultData":{
+
+        "mzList":[
+            {
+                "title":"过年大囤货斗价",
+                "date":"1月29日",
+                "time":"21:00",
+                "isNext":"false"
+            },
+            {
+                "title":"11过年大囤货斗价",
+                "date":"2月29日",
+                "time":"21:00",
+                "isNext":"false"
+            },
+            {
+                "title":"22过年大囤货斗价",
+                "date":"3月29日",
+                "time":"21:00",
+                "isNext":"true"
+            }
+
+
+        ]
+    },
+    "success":"true"
+}}

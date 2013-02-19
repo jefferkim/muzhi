@@ -127,9 +127,20 @@
             </div>
         </div>
 </script>
+
 <input type="hidden" id="J_moreParams" value="mz_key=0&ttid=700770@cloudkey_yunos_1.0.0" />
 
 <script type="text/javascript" src="http://127.0.0.1:9292/muzhi.js"> </script>
+<script type="template" id="J-forecastItemTemplate">
+    <div class="forecast-list">
+        <% _.each(forecastList,function(forecastItem){%>
+        <li class="mod">
+            <div class="hd"><h3><%= forecastItem.title%></h3><span class="start-time"><%= forecastItem.date%><b><%= forecastItem.time%></b>开始</span><em class="J-subscribe"></em></div>
+            <div class="bd"  <%if(forecastItem.isNext=="false"){%> style="display:none"; <%}%> ><ul <%if(forecastItem.isNext=="true"){%> class="current" <%}%>><div class="loading"><span></span></div></ul></div>
+        </li>
+        <% }) %>
+    </div>
+</script>
 <script type="text/javascript">
     application.init();
 </script>

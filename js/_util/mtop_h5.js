@@ -35,13 +35,6 @@ function configS(){
     // [auto check]system type , m or wapa or waptest
     exports.sysType = _checkSysType || 'm';
 
-    //need remove flow code
-
-    // [need config]index page
-    exports.indexPage = 'http://fav.' + exports.sysType + '.taobao.com/h5proxy-midFav.htm';
-    // [need config]error page
-    exports.errorPage = 'http://fav.' + exports.sysType + '.taobao.com/fav_error.htm';
-
     return exports;
 }
 
