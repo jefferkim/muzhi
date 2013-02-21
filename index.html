@@ -98,6 +98,10 @@
 
 </div>
 <input type="hidden" id="J_app_key" value="12574478" />
+<!--mask层-->
+<div id="J-mask" class="mask" style="display:none;"></div>
+
+
 <script type="template" id="J-itemTemplate">
         <div class="hd <%if(allowRefresh){%>allow-refresh<%}%>"><h3><a href="<%= link%>"><%= title%></a></h3>
             <%if(allowRefresh){%><a href="#" class="J-refresh"><s>刷新</s></a><%}%></div>
@@ -130,17 +134,32 @@
 
 <input type="hidden" id="J_moreParams" value="mz_key=0&ttid=700770@cloudkey_yunos_1.0.0" />
 
-<script type="text/javascript" src="http://127.0.0.1:9292/muzhi.js"> </script>
+<script type="text/javascript" src="http://10.13.125.85:9292/muzhi.js"> </script>
 <script type="template" id="J-forecastItemTemplate">
     <div class="forecast-list">
         <% _.each(forecastList,function(forecastItem){%>
         <li class="mod">
-            <div class="hd"><h3><%= forecastItem.title%></h3><span class="start-time"><%= forecastItem.date%><b><%= forecastItem.time%></b>开始</span><em class="J-subscribe"></em></div>
-            <div class="bd"  <%if(forecastItem.isNext=="false"){%> style="display:none"; <%}%> ><ul <%if(forecastItem.isNext=="true"){%> class="current" <%}%>><div class="loading"><span></span></div></ul></div>
+            <div class="hd" onclick=""><h3><%= forecastItem.title%></h3><span class="start-time"><%= forecastItem.date%><b><%= forecastItem.time%></b>开始</span><a href="#" class="J-subscribe"></a></div>
+            <div class="bd <%if(forecastItem.isNext=="false"){%>hide<%}%>"><ul <%if(forecastItem.isNext=="true"){%> class="current" <%}%>><div class="loading"><span></span></div></ul></div>
         </li>
         <% }) %>
     </div>
 </script>
+<script type="text/template" id="J-subsribe-box">
+    <div class="subscribe-box" id="J-subscribeBox">
+        <div class="subscribe-c">
+            <p class="tips">这场斗价开始前，通过手机短信提醒您，不产生任何费用。</p>
+            <div class="phone-input">
+                <label>手机号码：</label>
+                <a href="#" class="input-clear">del</a>
+                <input type="tel" class="J-input"/>
+                <a href="#" class="confirm-btn">确定</a>
+            </div>
+            <a href="#" id="J-close"></a>
+        </div>
+    </div>
+</script>
+
 <script type="text/javascript">
     application.init();
 </script>

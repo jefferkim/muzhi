@@ -89,6 +89,7 @@
         <p class="tips">这场斗价开始前，通过手机短信提醒您，不产生任何费用。</p>
         <div class="phone-input">
             <label>手机号码：</label>
+            <a href="#" class="input-clear">del</a>
             <input type="tel" class="J-input"/>
             <a href="#" class="confirm-btn">确定</a>
         </div>
@@ -96,6 +97,56 @@
     </div>
 </div>
 <script type="text/javascript" src="js/vendor/zepto.js"> </script>
+
+
+<script>
+
+            init : function(i){
+                var _input = $(this).find("");
+                var _val = op.placeholder ? _input.val() : "";
+                var _btn = $(this).find("button").attr("type","button").attr("disabled", true);
+                var keyupEvent = function(e){
+                    _btn[0].style.display = "block";
+                    !_input.val() && (_btn[0].style.display = "none");
+                };
+
+                //绑定输入框事件
+                //UC还要hack一下.
+                /UC/.test(navigator.userAgent) && _input.keyup(keyupEvent);
+
+                //android 中文情况
+                _input.on("input",keyupEvent).focus(function (){
+                    if($(this).val() == _val){$(this).val('')};
+                    this.value && ( _btn[0].style.display = "block");
+                    console.log("focus");
+                })
+                        .click(function(e){
+                            e.stopPropagation();
+                        })
+                        .bind('blur',function(){
+                            if($(this).val() == '' ) $(this).val(_val);
+                        });
+
+
+                $(document).click(function (){
+                    _btn[0].style.display = "none";
+                });
+
+                //按钮点击事件
+                $(this).on("touchstart click", "button",function(e){
+                    _input.focus();
+                    _input.val("");
+                    _btn[0].style.display = "none";
+                    op.callback();
+                    e.preventDefault();
+                    e.stopPropagation();
+                })
+            }
+        });
+
+
+
+</script>
 
 <script src="swipe.js"></script>
 
