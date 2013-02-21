@@ -18,7 +18,7 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
 
         var isTmall = $("#J_isTmall").val() == "true" ? 1 :0;
-        var url = {api:"mtop.mz.getMzList", data:{"b2c":isTmall, "cc": 0, "pre": "1", "page": 1, "pagesize": "12", "ext": "1"}};
+       /* var url = {api:"mtop.mz.getMzList", data:{"b2c":isTmall, "cc": 0, "pre": "1", "page": 1, "pagesize": "12", "ext": "1"}};
 
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
             var forecastList = resp.data.defaultData.mzList;
@@ -28,7 +28,24 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
             //mtop接口token校验并行请求会出错，所以回掉里面处理
             self._queryList();
-        });
+        });*/
+
+        $.ajax({
+            url:"js/json/forecastlist.json",
+            dataType:"json",
+            success:function(resp){
+                var forecastList = resp.data.defaultData.mzPreBigPromList;
+                var nextList = resp.data.defaultData.mzPartList;
+                var lastFCIndex = forecastList.length-1;
+                var html =  _.template($("#J-forecastItemTemplate").html(), {"forecastList":forecastList,"len":lastFCIndex});
+
+                $("#J-list").html(html);
+
+
+                $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:list}))
+
+            }
+        })
 
 
 

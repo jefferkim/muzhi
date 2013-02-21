@@ -137,10 +137,10 @@
 <script type="text/javascript" src="http://10.13.125.85:9292/muzhi.js"> </script>
 <script type="template" id="J-forecastItemTemplate">
     <div class="forecast-list">
-        <% _.each(forecastList,function(forecastItem){%>
+        <% _.each(forecastList,function(forecastItem,index){%>
         <li class="mod">
-            <div class="hd" onclick=""><h3><%= forecastItem.title%></h3><span class="start-time"><%= forecastItem.date%><b><%= forecastItem.time%></b>开始</span><a href="#" class="J-subscribe"></a></div>
-            <div class="bd <%if(forecastItem.isNext=="false"){%>hide<%}%>"><ul <%if(forecastItem.isNext=="true"){%> class="current" <%}%>><div class="loading"><span></span></div></ul></div>
+            <div class="hd" onclick=""><h3><%= forecastItem.name%></h3><span class="start-time"><%= forecastItem.date%><b><%= forecastItem.time%></b>开始</span><a href="#" class="J-subscribe"></a></div>
+            <div class="bd <%if(index != len){%>hide<%}%>"><ul <%if(index != len){%> class="current" <%}%>><div class="loading"><span></span></div></ul></div>
         </li>
         <% }) %>
     </div>
