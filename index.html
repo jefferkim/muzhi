@@ -138,7 +138,7 @@
 <script type="template" id="J-forecastItemTemplate">
     <div class="forecast-list">
         <% _.each(forecastList,function(forecastItem,index){%>
-        <li class="mod">
+        <li class="mod <%if(index == len){%>open<%}%>" data-gid="<%= forecastItem.gid%>">
             <div class="hd" onclick=""><h3><%= forecastItem.name%></h3><span class="start-time"><%= forecastItem.date%><b><%= forecastItem.time%></b>开始</span><a href="#" class="J-subscribe"></a></div>
             <div class="bd <%if(index != len){%>hide<%}%>"><ul <%if(index != len){%> class="current" <%}%>><div class="loading"><span></span></div></ul></div>
         </li>
