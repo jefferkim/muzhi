@@ -19,16 +19,15 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
 
         var isTmall = $("#J_isTmall").val() == "true" ? 1 : 0;
-        /* var url = {api:"mtop.mz.getMzList", data:{"b2c":isTmall, "cc": 0, "pre": "1", "page": 1, "pagesize": "12", "ext": "1"}};
+        var url = {api:"mtop.mz.getMzPre", data:{"b2c":isTmall,"page": 1, "pagesize": "12"}};
 
-         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
-         var forecastList = resp.data.defaultData.mzList;
-         var html = _.template($("#J-forecastItemTemplate").html(), {"forecastList":forecastList});
-
-         $("#J-list").html(html);
-
-         //mtop接口token校验并行请求会出错，所以回掉里面处理
-         self._queryList();
+        /* Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+             var forecastList = resp.data.defaultData.mzPrePromList;
+             var nextList = resp.data.defaultData.mzPartList;
+             var lastFCIndex = forecastList.length - 1;
+             var html = _.template($("#J-forecastItemTemplate").html(), {"forecastList":forecastList, "len":lastFCIndex});
+             $("#J-list").html(html);
+             $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}))
          });*/
 
         $.ajax({
@@ -41,8 +40,6 @@ Muzhi.forecastlistView = Backbone.View.extend({
                 var html = _.template($("#J-forecastItemTemplate").html(), {"forecastList":forecastList, "len":lastFCIndex});
 
                 $("#J-list").html(html);
-
-
                 $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}))
 
             }
@@ -77,9 +74,31 @@ Muzhi.forecastlistView = Backbone.View.extend({
         //load more pages
         $(window).on("scroll", function (e) {
             var el = $(".open");
+            if(el.length < 1) return;
+            var elHd = el.find(".hd");
+            var elBd = el.find(".bd");
+
             if (window.pageYOffset + $(window).height() > el.height() + el.offset().top) {
                 self.currentPageNo++;
                 self._loadMoreList(self.currentPageNo);
+            }
+            if(el.offset().top < window.pageYOffset){
+                   elHd.css({
+                       "position":"absolute",
+                       "top":window.pageYOffset -250
+                   });
+                   elBd.css({
+                       "padding-top":"50px"
+                   });
+
+            }else{
+                elHd.css({
+                    "position":"relative",
+                    "top":0
+                });
+                elBd.css({
+                    "padding-top":0
+                });
             }
         });
 
@@ -183,6 +202,7 @@ Muzhi.forecastlistView = Backbone.View.extend({
             currentTarget = e.currentTarget;
 
         var currentMod = $(currentTarget).parents(".mod");
+        var currentModHd = currentMod.find(".hd");
 
         if ($(target).hasClass("J-subscribe")) return;
 
@@ -190,7 +210,20 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
         $(currentTarget).next(".bd").toggleClass("hide");
         currentMod.toggleClass("open");
-        this._queryList($(currentTarget).next(".bd").find("ul"));
+        currentModHd.css({
+           "position":"relative",
+            "top":0
+        });
+        currentMod.find(".bd").css({
+            "padding-top":0
+        });
+
+        var newElHd = currentModHd.clone();
+        console.log(newElHd);
+        $("#J-cloneNode").html(newElHd);
+
+
+        this._queryList(currentMod.find("ul"));
     },
 
     //query the list

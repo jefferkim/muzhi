@@ -19,7 +19,7 @@ function configS(){
 
     // loading
     {
-        var _checkSysType = 'm';
+        var _checkSysType = 'wapa';
         if(window.location.host=='localhost' || window.location.host.match('.*\\waptest\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*')){
             _checkSysType = 'waptest';
         } else if (window.location.host.match('.*\\wapa\\.(taobao|tmall|etao|alibaba|alipay|aliyun)\\.com.*'))
