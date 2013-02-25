@@ -16,12 +16,13 @@ Muzhi.forecastlistView = Backbone.View.extend({
         this.subscribeBoxTpl = $("#J-subsribe-box").html();
         this.mask = $("#J-mask");
         this.currentPageNo = 1;
+        this.currentGid = 0;
 
 
         var isTmall = $("#J_isTmall").val() == "true" ? 1 : 0;
         var url = {api:"mtop.mz.getMzPre", data:{"b2c":isTmall,"page": 1, "pagesize": "12"}};
 
-        /* Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+        /*Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
              var forecastList = resp.data.defaultData.mzPrePromList;
              var nextList = resp.data.defaultData.mzPartList;
              var lastFCIndex = forecastList.length - 1;
@@ -45,31 +46,6 @@ Muzhi.forecastlistView = Backbone.View.extend({
             }
         })
 
-
-        document.addEventListener("touchmove", function (e) {
-            /*
-
-             var pageY,elOffsetY;
-
-             pageY = e.pageY;
-             var el = $(".open");
-
-             elOffsetY = el.offset().top;
-
-             if(pageY>elOffsetY){
-             el.css({
-             position:"absolute",
-             top:0
-             })
-             }else{
-             el.find("span").css({
-             position:"relative"
-             })
-             }
-             */
-
-
-        }, false);
 
         //load more pages
         $(window).on("scroll", function (e) {
@@ -151,6 +127,8 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
         $(target).addClass("subscribing");
 
+        this.currentGid = $(target).parents(".mod").attr("data-gid");
+
         var subscribeBox = $("#J-subscribeBox");
 
         if (subscribeBox.length > 0)
@@ -164,27 +142,25 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
     confirmSubscribe:function (e) {
         e.preventDefault();
-        var self = this;
-        var subscribeBtn = $(".subscribing");
-        $.ajax({
-            url:"js/json/subscribe.json",
-            dataType:"json",
-            success:function (resp) {
+        var self = this,
+            subscribeBtn = $(".subscribing"),
+            mobileNumber = $.trim($(".J-input").val()); //TODO:add RegExp
 
-                var isSuccess = resp.data.success;
+        var url = {api:"mtop.mz.doSubMz",data:{"step":"2","gid":this.currentGid,"mobile":mobileNumber}};
 
-                if (isSuccess == "true") {
-                    subscribeBtn.addClass("subscribed");
-                    $(".J-subscribe").removeClass("subscribing");
-                    self.destroySubscribe(e);
-
-                    notification.flash('<div class="success-subscribed"><span class="icon"></span>已经成功订阅</div>')
-                } else {
-                    notification.flash("订阅失败").show();
-                }
-
+        Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+            var isSuccess = resp.data.success;
+            if (isSuccess == "true") {
+                subscribeBtn.addClass("subscribed");
+                $(".J-subscribe").removeClass("subscribing");
+                self.destroySubscribe(e);
+                notification.flash('<div class="success-subscribed"><span class="icon"></span>已经成功订阅</div>')
+            } else {
+                notification.flash(resp.data.errorMsg).show();
             }
-        })
+
+        });
+
     },
 
     //unfold the pre list
@@ -212,7 +188,7 @@ Muzhi.forecastlistView = Backbone.View.extend({
         });
 
         var newElHd = currentModHd.clone();
-        console.log(newElHd);
+
         $("#J-cloneNode").html(newElHd);
 
 
