@@ -82,23 +82,16 @@ Muzhi.forecastlistView = Backbone.View.extend({
                 self.currentPageNo++;
                 self._loadMoreList(self.currentPageNo);
             }
-            if(el.offset().top < window.pageYOffset){
-                   elHd.css({
-                       "position":"absolute",
-                       "top":window.pageYOffset -250
-                   });
-                   elBd.css({
-                       "padding-top":"50px"
-                   });
+
+            // hd will fixed to the top where scroll to bottom
+            if(el.offset().top+20 < window.pageYOffset){
+                  $("#J-cloneNode>.hd").show().css({
+                      "position":"fixed",
+                      "top":0
+                  });
 
             }else{
-                elHd.css({
-                    "position":"relative",
-                    "top":0
-                });
-                elBd.css({
-                    "padding-top":0
-                });
+                $("#J-cloneNode>.hd").hide()
             }
         });
 
