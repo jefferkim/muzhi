@@ -155,7 +155,7 @@ Muzhi.Router = Backbone.Router.extend({
     //预告
     forecast:function(){
         $("#J-sliderWrap").hide();
-
+        $("body").off();
         new Muzhi.forecastlistView();
 
 

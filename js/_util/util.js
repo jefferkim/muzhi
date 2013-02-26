@@ -71,8 +71,8 @@ Muzhi.Util = {
             case "#!list":
                 $("#J-filterLink").addClass(CURCLS);
                 break;
-            case "#!sold":
-                $("#J-soldOut").addClass(CURCLS);
+            case "#!forecast":
+                $("#J-forecast").addClass(CURCLS);
                 break;
             case "#!my":
                 $("#J-My").addClass(CURCLS);
