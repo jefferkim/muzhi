@@ -20,18 +20,19 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
 
         var isTmall = $("#J_isTmall").val() == "true" ? 1 : 0;
-        var url = {api:"mtop.mz.getMzPre", data:{"b2c":isTmall,"page": 1, "pagesize": "12"}};
+        var url = {api:"mtop.mz.getMzPre", data:{"b2c":0,"page": 1, "pagesize": "12"}};
 
         /*Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
-             var forecastList = resp.data.defaultData.mzPrePromList;
-             var nextList = resp.data.defaultData.mzPartList;
-             var lastFCIndex = forecastList.length - 1;
-             var html = _.template($("#J-forecastItemTemplate").html(), {"forecastList":forecastList, "len":lastFCIndex});
-             $("#J-list").html(html);
-             $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}))
+                 var forecastList = resp.data.defaultData.mzPrePromList;
+                 var nextList = resp.data.defaultData.mzPartList;
+                 var lastFCIndex = forecastList.length - 1;
+                 var html = _.template($("#J-forecastItemTemplate").html(), {"forecastList":forecastList, "len":lastFCIndex});
+
+                 $("#J-list").html(html);
+                 $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}))
          });*/
 
-        $.ajax({
+         $.ajax({
             url:"js/json/forecastlist.json",
             dataType:"json",
             success:function (resp) {
