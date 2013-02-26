@@ -18,21 +18,11 @@ Muzhi.forecastlistView = Backbone.View.extend({
         this.currentPageNo = 1;
         this.currentGid = 0;
 
-
         var isTmall = $("#J_isTmall").val() == "true" ? 1 : 0;
-        var url = {api:"mtop.mz.getMzPre", data:{"b2c":0,"page": 1, "pagesize": "12"}};
+        var url = {api:"mtop.mz.getMzPre", data:{"b2c":isTmall, "page":1, "pagesize":"12"}};
 
-        /* Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
-                 var forecastList = resp.data.defaultData.mzPrePromList;
-                 var nextList = resp.data.defaultData.mzPartList;
-                 var lastFCIndex = forecastList.length - 1;
-                 var html = _.template($("#J-forecastItemTemplate").html(), {"forecastList":forecastList, "len":lastFCIndex});
-
-                 $("#J-list").html(html);
-                 $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}))
-         });  */
-
-         $.ajax({
+        // Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+        $.ajax({
             url:"js/json/forecastlist.json",
             dataType:"json",
             success:function (resp) {
@@ -47,11 +37,11 @@ Muzhi.forecastlistView = Backbone.View.extend({
         });
 
 
-        var fixBar = function(e){
+        var fixBar = function (e) {
             var el = $(".open"),
                 elHd = el.find(".hd"),
                 elBd = el.find(".bd");
-            if(el.length < 1) return; // no open element
+            if (el.length < 1) return; // no open element
 
             if (window.pageYOffset + $(window).height() > el.height() + el.offset().top) {
                 self.currentPageNo++;
@@ -59,24 +49,25 @@ Muzhi.forecastlistView = Backbone.View.extend({
             }
 
             // hd will fixed to the top where scroll
-            if(el.offset().top+20 < window.pageYOffset){
+            if (el.offset().top + 20 < window.pageYOffset) {
                 $("#J-cloneNode").show().css({
                     "position":"fixed",
                     "top":0
                 });
 
-            }else{
+            } else {
                 $("#J-cloneNode").hide()
             }
         }
 
 
-
         var isIDevice = (/iphone|ipad|itouch/gi).test(navigator.appVersion);
 
-        var eventType = isIDevice ?  "touchmove" : "scroll"; //idevice use the touchmove ,android use scroll
+        var eventType = isIDevice ? "touchmove" : "scroll"; //idevice use the touchmove ,android use scroll
 
-        $(window).on(eventType, function (e) { fixBar(e) });
+        $(window).on(eventType, function (e) {
+            fixBar(e)
+        });
 
 
         //adjust the height where resize
@@ -87,12 +78,12 @@ Muzhi.forecastlistView = Backbone.View.extend({
     },
 
 
-
     renderSubscribe:function (e) {
         this.mask.height(document.body.clientHeight);
         this.mask.show();
         $("#J-subscribeBox").show();
         $(".J-input").val(localStorage.getItem("MZ_mobile"));
+        this.input_handle();
 
         this.handle = handle = function (e) {
             e.preventDefault()
@@ -110,6 +101,27 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
     },
 
+    input_handle:function () {
+
+        var numberInput = $(".J-input"),
+            delBtn = $(".input-clear");
+        var _isEmpty = function () {
+            numberInput.val() !== "" ? delBtn.show() : delBtn.hide();
+        }
+        numberInput.on("input",function () {
+            _isEmpty();
+        }).on("keyup", function () {
+                _isEmpty();
+            });
+
+        delBtn.on("click", function (e) {
+            e.preventDefault();
+            numberInput.val("");
+            delBtn.hide();
+        });
+
+    },
+
     subscribe:function (e) {
         e.preventDefault();
         var self = this;
@@ -117,8 +129,6 @@ Muzhi.forecastlistView = Backbone.View.extend({
         var target = e.currentTarget;
 
         if ($(target).hasClass("subscribed")) return;
-
-       // $(target).addClass("subscribing");
 
         this.currentGid = $(target).parents(".hd").attr("data-gid"); //set the gid
 
@@ -140,26 +150,13 @@ Muzhi.forecastlistView = Backbone.View.extend({
             mobileNumber = $(".J-input").val(); //TODO:add RegExp
 
 
-        if(!/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobileNumber)){
+        if (!/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobileNumber)) {
             notification.flash("电话号码不正确").show();
-             return;
+            return;
         }
-        var url = {api:"mtop.mz.doSubMz",data:{"step":"2","gid":this.currentGid,"mobile":mobileNumber}};
+        var url = {api:"mtop.mz.doSubMz", data:{"step":"2", "gid":this.currentGid, "mobile":mobileNumber}};
 
-       /* Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
-            var isSuccess = resp.data.success;
-            if (isSuccess == "true") {
-                subscribeBtn.addClass("subscribed");
-                $(".J-subscribe").removeClass("subscribing");
-                self.destroySubscribe(e);
-                notification.flash('<div class="success-subscribed"><span class="icon"></span>已经成功订阅</div>')
-            } else {
-                notification.flash(resp.data.errorMsg).show();
-            }
-
-        });*/
-
-
+        //Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
         $.ajax({
             url:"js/json/subscribe.json",
             dataType:"json",
@@ -169,12 +166,12 @@ Muzhi.forecastlistView = Backbone.View.extend({
                     subscribeBtn.addClass("subscribed");
                     self.destroySubscribe(e);
                     notification.flash('<div class="success-subscribed"><span class="icon"></span>已经成功订阅</div>');
-                    localStorage.setItem("MZ_mobile",mobileNumber);
+                    localStorage.setItem("MZ_mobile", mobileNumber);
                 } else {
                     notification.flash(resp.data.errorMsg).show();
                 }
 
-           }
+            }
         });
 
     },
@@ -194,14 +191,14 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
         //condition
 
-        if($(currentTarget).parents(".mod").length == 0){
+        if ($(currentTarget).parents(".mod").length == 0) {
             $(".open").siblings(".mod").find(".bd").addClass("hide");
             $(".open").find(".bd").toggleClass("hide");
             $(".open").siblings(".mod").removeClass("open");
             $(".open").toggleClass("open");
             $(currentTarget).parents("#J-cloneNode").hide();
 
-        }else{
+        } else {
             siblingMod.find(".bd").addClass("hide");
             currentMod.find(".bd").toggleClass("hide");
 
@@ -226,31 +223,25 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
     //query the list
     _queryList:function (pageNo) {
-
         var self = this;
+
+        var url = {api:"mtop.mz.getMzListById", data:{"gid":this.currentGid}};
+
+        //Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
         $.ajax({
             url:"js/json/queryList.json",
+            data:{"pageNo":pageNo},
             dataType:"json",
             success:function (resp) {
                 var list = resp.data.defaultData.mzPartList;
-                if(!list) return;
+                if (!list) return;
                 var html = _.template(self.itemTemplate, {list:list});
-                if(pageNo)
+                if (pageNo)
                     $(".open").find("ul").append(html);
                 else
                     $(".open").find("ul").html(html);
             }
         });
-
-
-         var url = {api:"mtop.mz.getMzListById", data:{"gid": this.currentGid}};
-
-        /*Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
-             var list = resp.data.defaultData.mzList;
-             var html = _.template(self.itemTemplate, {list:list});
-             wrap.html(html);
-         });
-         */
 
     }
 });
