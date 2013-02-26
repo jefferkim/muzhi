@@ -22,7 +22,7 @@ Muzhi.forecastlistView = Backbone.View.extend({
         var isTmall = $("#J_isTmall").val() == "true" ? 1 : 0;
         var url = {api:"mtop.mz.getMzPre", data:{"b2c":0,"page": 1, "pagesize": "12"}};
 
-        /*Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+        /* Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
                  var forecastList = resp.data.defaultData.mzPrePromList;
                  var nextList = resp.data.defaultData.mzPartList;
                  var lastFCIndex = forecastList.length - 1;
@@ -30,7 +30,7 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
                  $("#J-list").html(html);
                  $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}))
-         });*/
+         });  */
 
          $.ajax({
             url:"js/json/forecastlist.json",
@@ -40,37 +40,44 @@ Muzhi.forecastlistView = Backbone.View.extend({
                 var nextList = resp.data.defaultData.mzPartList;
                 var lastFCIndex = forecastList.length - 1;
                 var html = _.template($("#J-forecastItemTemplate").html(), {"forecastList":forecastList, "len":lastFCIndex});
-
                 $("#J-list").html(html);
-                $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}))
-
+                $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}));
+                $("#J-cloneNode").html($(".open").find(".hd").clone());
             }
-        })
+        });
 
 
-        //load more pages
-        $(window).on("scroll", function (e) {
-            var el = $(".open");
-            if(el.length < 1) return;
-            var elHd = el.find(".hd");
-            var elBd = el.find(".bd");
+        var fixBar = function(e){
+            var el = $(".open"),
+                elHd = el.find(".hd"),
+                elBd = el.find(".bd");
+            if(el.length < 1) return; // no open element
 
             if (window.pageYOffset + $(window).height() > el.height() + el.offset().top) {
                 self.currentPageNo++;
-                self._loadMoreList(self.currentPageNo);
+                self._queryList(self.currentPageNo);
             }
 
-            // hd will fixed to the top where scroll to bottom
+            // hd will fixed to the top where scroll
             if(el.offset().top+20 < window.pageYOffset){
-                  $("#J-cloneNode").show().css({
-                      "position":"fixed",
-                      "top":0
-                  });
+                $("#J-cloneNode").show().css({
+                    "position":"fixed",
+                    "top":0
+                });
 
             }else{
                 $("#J-cloneNode").hide()
             }
-        });
+        }
+
+
+
+        var isIDevice = (/iphone|ipad|itouch/gi).test(navigator.appVersion);
+
+        var eventType = isIDevice ?  "touchmove" : "scroll"; //idevice use the touchmove ,android use scroll
+
+        $(window).on(eventType, function (e) { fixBar(e) });
+
 
         //adjust the height where resize
         window.addEventListener("resize", function () {
@@ -79,34 +86,19 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
     },
 
-    //load more list where scroll to the bottom of list
-    _loadMoreList:function (pageNo) {
-        var self = this;
 
-        $.ajax({
-            url:"js/json/queryList.json",
-            data:{"pageNo":pageNo},
-            dataType:"json",
-            success:function (resp) {
-                var list = resp.data.defaultData.mzPartList;
-                if(!list) return;
-                var html = _.template(self.itemTemplate, {list:list});
-                $(".open").find("ul").append(html);
-            }
-        });
-
-    },
 
     renderSubscribe:function (e) {
-
+        this.mask.height(document.body.clientHeight);
         this.mask.show();
         $("#J-subscribeBox").show();
+        $(".J-input").val(localStorage.getItem("MZ_mobile"));
 
         this.handle = handle = function (e) {
             e.preventDefault()
         };
 
-        document.addEventListener("touchmove", handle, false);
+        document.addEventListener("touchmove", handle, false);  //disabled the touchmove will avoid of adjusting the height of mask
     },
 
     destroySubscribe:function (e) {
@@ -145,8 +137,13 @@ Muzhi.forecastlistView = Backbone.View.extend({
         e.preventDefault();
         var self = this,
             subscribeBtn = $(".open").find(".J-subscribe"),
-            mobileNumber = $.trim($(".J-input").val()); //TODO:add RegExp
+            mobileNumber = $(".J-input").val(); //TODO:add RegExp
 
+
+        if(!/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobileNumber)){
+            notification.flash("电话号码不正确").show();
+             return;
+        }
         var url = {api:"mtop.mz.doSubMz",data:{"step":"2","gid":this.currentGid,"mobile":mobileNumber}};
 
        /* Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
@@ -171,7 +168,8 @@ Muzhi.forecastlistView = Backbone.View.extend({
                 if (isSuccess == "true") {
                     subscribeBtn.addClass("subscribed");
                     self.destroySubscribe(e);
-                    notification.flash('<div class="success-subscribed"><span class="icon"></span>已经成功订阅</div>')
+                    notification.flash('<div class="success-subscribed"><span class="icon"></span>已经成功订阅</div>');
+                    localStorage.setItem("MZ_mobile",mobileNumber);
                 } else {
                     notification.flash(resp.data.errorMsg).show();
                 }
@@ -181,7 +179,7 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
     },
 
-    //unfold the pre list
+    //toggle  the pre list
     toggleList:function (e) {
         this.currentPageNo = 1; //reset the pageno where open a new pre list
 
@@ -194,56 +192,65 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
         if ($(target).hasClass("J-subscribe")) return;
 
-        siblingMod.find(".bd").addClass("hide");
-        currentMod.find(".bd").toggleClass("hide");
+        //condition
 
-        //remove open class
-        siblingMod.removeClass("open");
-        currentMod.toggleClass("open");
+        if($(currentTarget).parents(".mod").length == 0){
+            $(".open").siblings(".mod").find(".bd").addClass("hide");
+            $(".open").find(".bd").toggleClass("hide");
+            $(".open").siblings(".mod").removeClass("open");
+            $(".open").toggleClass("open");
+            $(currentTarget).parents("#J-cloneNode").hide();
+
+        }else{
+            siblingMod.find(".bd").addClass("hide");
+            currentMod.find(".bd").toggleClass("hide");
+
+            //remove open class
+            siblingMod.removeClass("open");
+            currentMod.toggleClass("open");
+            //clone the node for fixed element
+            $("#J-cloneNode").html(currentModHd.clone());
+        }
 
         currentModHd.css({
-           "position":"relative",
+            "position":"relative",
             "top":0
         });
         currentMod.find(".bd").css({
             "padding-top":0
         });
 
-        //clone the node for fixed element
-        var newElHd = currentModHd.clone();
-        $("#J-cloneNode").html(newElHd);
-
         //query list
-        this._queryList(currentMod.find("ul"));
+        this._queryList();
     },
 
     //query the list
-    _queryList:function (ul) {
+    _queryList:function (pageNo) {
 
         var self = this;
-
-        var wrap = ul ? ul : $(".current");
-
         $.ajax({
             url:"js/json/queryList.json",
             dataType:"json",
             success:function (resp) {
                 var list = resp.data.defaultData.mzPartList;
+                if(!list) return;
                 var html = _.template(self.itemTemplate, {list:list});
-                wrap.html(html);
-
+                if(pageNo)
+                    $(".open").find("ul").append(html);
+                else
+                    $(".open").find("ul").html(html);
             }
         });
 
 
-        /* var url = {api:"mtop.mz.getMzListById", data:{"gid": wrap.attr("data-gid")}};
+         var url = {api:"mtop.mz.getMzListById", data:{"gid": this.currentGid}};
 
-         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
-         var list = resp.data.defaultData.mzList;
-         var html = _.template(self.itemTemplate, {list:list});
-         wrap.html(html);
-         });*/
-
+        /*Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+             var list = resp.data.defaultData.mzList;
+             var html = _.template(self.itemTemplate, {list:list});
+             wrap.html(html);
+         });
+         */
 
     }
 });

@@ -12,13 +12,15 @@
                     "name":"过年大囤货斗价",
                     "gid":"1",
                     "date":"1月20日",
-                    "time":"22:00"
+                    "time":"22:00",
+                    "subed":"true"
                 },
                 {
                     "name":"过年大囤货斗价",
                     "gid":"2",
                     "date":"1月20日",
-                    "time":"21:00"
+                    "time":"21:00",
+                    "subed":"false"
                 }
             ],
             "mzPartList":[
