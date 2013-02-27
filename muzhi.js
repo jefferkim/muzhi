@@ -4860,8 +4860,8 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
     initialize:function () {
         var self = this;
-
-        this.itemTemplate = '<% _.each(list,function(item){%><li><p><img src="<%= item.mzBasePart.pic %>"/><span class="price"><%= item.mzCorePart.maxPrice%></span></p><span><%= item.mzBasePart.title%></span></li><%})%>';
+        var sys=Muzhi.uriSysType;
+        this.itemTemplate = '<% _.each(list,function(item){%><li><p><a href="http://a.'+sys+'.taobao.com/i<%= item.mzBasePart.itemId%>.htm?'+ $("#J_moreParams").val()+'"><img src="<%= item.mzBasePart.pic %>"/></a><span class="price"><%= item.mzCorePart.maxPrice%></span></p><span><%= item.mzBasePart.ruleDesc%></span></li><%})%>';
         this.subscribeBoxTpl = $("#J-subsribe-box").html();
         this.mask = $("#J-mask");
         this.currentPageNo = 1;
@@ -4878,8 +4878,10 @@ Muzhi.forecastlistView = Backbone.View.extend({
                 var forecastList = resp.data.defaultData.mzPrePromList;
                 var nextList = resp.data.defaultData.mzPartList;
                 var lastFCIndex = forecastList.length - 1;
+
                 var html = _.template($("#J-forecastItemTemplate").html(), {"forecastList":forecastList, "len":lastFCIndex});
                 $("#J-list").html(html);
+
                 $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}));
                 $("#J-cloneNode").html($(".open").find(".hd").clone());
          //   }
