@@ -17,15 +17,16 @@ Muzhi.forecastlistView = Backbone.View.extend({
         this.mask = $("#J-mask");
         this.currentPageNo = 1;
         this.currentGid = 0;
+        this.isNext = true;
 
-        var isTmall = $("#J_isTmall").val() == "true" ? 1 : 0;
+        this.isTmall = isTmall = $("#J_isTmall").val() == "true" ? 1 : 0;
         var url = {api:"mtop.mz.getMzPre", data:{"b2c":isTmall, "page":1, "pagesize":"12"}};
 
-         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
-       // $.ajax({
-        //    url:"js/json/forecastlist.json",
-         //   dataType:"json",
-        //    success:function (resp) {
+       ////  Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
+          $.ajax({
+               url:"js/json/forecastlist.json",
+               dataType:"json",
+               success:function (resp) {
                 var forecastList = resp.data.defaultData.mzPrePromList;
                 var nextList = resp.data.defaultData.mzPartList;
                 var lastFCIndex = forecastList.length - 1;
@@ -35,8 +36,11 @@ Muzhi.forecastlistView = Backbone.View.extend({
 
                 $(".mod").eq(lastFCIndex).find("ul").html(_.template(self.itemTemplate, {list:nextList}));
                 $("#J-cloneNode").html($(".open").find(".hd").clone());
-         //   }
-        });
+             }
+
+
+
+         });
 
 
         var fixBar = function (e) {
@@ -221,9 +225,10 @@ Muzhi.forecastlistView = Backbone.View.extend({
         currentMod.find(".bd").css({
             "padding-top":0
         });
+        this.isNext = currentModHd.hasClass("last");
 
         //query list
-        if(currentMod.hasClass("open")){
+        if(currentMod.hasClass("open")){//only open the tab will query the list
             this._queryList();
         }
 
@@ -232,8 +237,8 @@ Muzhi.forecastlistView = Backbone.View.extend({
     //query the list
     _queryList:function (pageNo) {
         var self = this;
-
-        var url = {api:"mtop.mz.getMzListById", data:{"gid":this.currentGid,"page":pageNo,"pagesize":"12"}};
+        var wrapUl = $(".open").find("ul");
+        var url = this.isNext ? {api:"mtop.mz.getMzPre", data:{"b2c":this.isTmall, "page":pageNo, "pagesize":"12"}} : {api:"mtop.mz.getMzListById", data:{"gid":this.currentGid,"page":pageNo,"pagesize":"12"}};
 
         Muzhi.mtopH5.getApi(url.api, "1.0", url.data, {}, function (resp) {
         /*$.ajax({
@@ -241,13 +246,16 @@ Muzhi.forecastlistView = Backbone.View.extend({
             data:{"pageNo":pageNo},
             dataType:"json",
             success:function (resp) {
-        */        var list = resp.data.defaultData.mzPartList;
-                if (!list) return;
+        */      if(!resp.data.defaultData){
+                   wrapUl.html("");
+                   return;
+                }
+                var list = resp.data.defaultData.mzPartList;
                 var html = _.template(self.itemTemplate, {list:list});
                 if (pageNo)
-                    $(".open").find("ul").append(html);
+                    wrapUl.append(html);
                 else
-                    $(".open").find("ul").html(html);
+                    wrapUl.html(html);
           //  }
         });
 

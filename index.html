@@ -142,7 +142,7 @@
     <div class="forecast-list">
         <% _.each(forecastList,function(forecastItem,index){%>
         <li class="mod <%if(index == len){%>open<%}%>">
-            <div class="hd" onclick=""  data-gid="<%= forecastItem.gid%>"><h3><%= forecastItem.name%></h3><span class="start-time"><%= forecastItem.date%><b><%= forecastItem.time%></b>开始</span><a href="#" class="J-subscribe <% if(forecastItem.subed=='true'){%>subscribed<%}%>"></a><em class="arrow"></em></div>
+            <div class="hd <%if(index == len){%>last<%}%>" onclick=""  data-gid="<%= forecastItem.gid%>"><h3><%= forecastItem.name%></h3><span class="start-time"><%= forecastItem.date%><b><%= forecastItem.time%></b>开始</span><a href="#" class="J-subscribe <% if(forecastItem.subed=='true'){%>subscribed<%}%>"></a><em class="arrow"></em></div>
             <div class="bd <%if(index != len){%>hide<%}%>"><ul <%if(index != len){%> class="current" <%}%>><div class="loading"><span></span></div></ul></div>
         </li>
         <% }) %>
